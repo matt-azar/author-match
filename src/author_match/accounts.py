@@ -10,9 +10,12 @@ from pathlib import Path
 import numpy as np
 import sklearn
 
-from . import __version__
+from . import __version__, adaptive_features
+from .adaptive_calibration import AdaptiveCalibration, fit_adaptive_calibration
+from .adaptive_ranker import AdaptiveRanker, fit_ranker
+from .adaptive_trials import sample_adaptive_trials
 from .data import load_split
-from .profile_features import (FEATURE_VERSION, independent_profiles, limit_profile,
+from .profile_features import (FEATURE_VERSION, adaptive_pair_reason, independent_profiles, limit_profile,
                                make_profile, pair_features, pair_reason)
 from .profile_io import ProfileArtifact
 from .profile_probability import eval_report, fit_account_model, posterior, score
@@ -42,25 +45,28 @@ def _sizes(a, b):
     return [first[0], second[0], first[1], second[1]]
 
 
-def _trial_stream(posts, basis, seed):
+def _trial_stream(posts, basis, seed, sampler=sample_trials):
     # Many trials reuse an identical history. Bound the cache so this works
     # both for a small evaluation and for a longer training job.
     summarize = lru_cache(maxsize=256)(make_profile)
-    for trial in sample_trials(posts, label_basis=basis, seed=seed):
+    for trial in sampler(posts, label_basis=basis, seed=seed):
         a, b = independent_profiles(summarize(trial.left), summarize(trial.right))
         yield trial, a, b
 
 
-def _fit_rows(posts, basis, seed):
+def _fit_rows(posts, basis, seed, adaptive=False):
     x, y, support = [], [], []
     index = {}
     excluded = Counter()
-    for trial, a, b in _trial_stream(posts, basis, seed):
-        reason = pair_reason(a, b)
+    sampler = sample_adaptive_trials if adaptive else sample_trials
+    features = adaptive_features.pair_features if adaptive else pair_features
+    check = adaptive_pair_reason if adaptive else pair_reason
+    for trial, a, b in _trial_stream(posts, basis, seed, sampler):
+        reason = check(a, b)
         if reason:
             excluded[reason] += 1
             continue
-        x.append(pair_features(a, b))
+        x.append(features(a, b))
         y.append(trial.same)
         for owner in (trial.left_person, trial.right_person):
             index.setdefault(owner, len(index))
@@ -71,7 +77,10 @@ def _fit_rows(posts, basis, seed):
 
 
 def train_accounts(data, *, seed=42, pretrain=None, exclude_proxy_handles=None,
-                   exclude_proxy_windows=None, description=None, link_evidence=None):
+                   exclude_proxy_windows=None, description=None, link_evidence=None, method="adaptive"):
+    if method not in ("baseline", "adaptive"):
+        raise ValueError("unknown account method")
+    adaptive = method == "adaptive"
     data = Path(data)
     linked = data.is_file()
     basis = "linked_handles" if linked else "account_proxy"
@@ -110,23 +119,31 @@ def train_accounts(data, *, seed=42, pretrain=None, exclude_proxy_handles=None,
     if _identities(train) & _identities(cal):
         raise ValueError("overlapping writers or handles in training and calibration")
     train_basis = "account_proxy" if transfer else basis
-    x, y, _, train_people, train_exclusions = _fit_rows(train, train_basis, seed)
-    xc, yc, rows, cal_people, cal_exclusions = _fit_rows(cal, basis, seed + 1)
+    x, y, _, train_people, train_exclusions = _fit_rows(train, train_basis, seed, adaptive)
+    xc, yc, rows, cal_people, cal_exclusions = _fit_rows(cal, basis, seed + 1, adaptive)
     effective_people = min(len({row[5] for row in rows if row[4] == 1}),
                            len({row[5] for row in rows if row[4] == 0}),
                            len({row[6] for row in rows if row[4] == 0}))
-    model = fit_account_model(x, y, xc, yc, train_authors=train_people, calibration_authors=cal_people,
-                              calibration_effective_people=effective_people)
+    if adaptive:
+        model = fit_ranker(x, y, seed)
+        support_data = fit_adaptive_calibration(model.margins(xc), rows)
+        status = support_data["status"]
+    else:
+        model = fit_account_model(x, y, xc, yc, train_authors=train_people, calibration_authors=cal_people,
+                                  calibration_effective_people=effective_people)
+        support_data = {"rows": rows, "min_people": 6}
+        status = model.calibration_status
     info = {
         "author_match_version": __version__, "sklearn_version": sklearn.__version__,
-        "feature_version": FEATURE_VERSION, "seed": seed, "label_basis": basis, "link_evidence": link_evidence,
+        "method": method, "feature_version": adaptive_features.FEATURE_VERSION if adaptive else FEATURE_VERSION, "seed": seed, "label_basis": basis, "link_evidence": link_evidence,
         "training_label_basis": train_basis, "transfer": transfer, "source_sha256": _source_digest(data),
         "training_authors": len(train_people), "calibration_authors": len(cal_people),
-        "effective_calibration_people": effective_people,
-        "training_trials": model.train_counts, "calibration_trials": model.calibration_counts,
+        "training_trials": {"same": sum(y), "different": len(y) - sum(y)},
+        "calibration_trials": {"same": sum(yc), "different": len(yc) - sum(yc)},
         "training_exclusions": train_exclusions, "calibration_exclusions": cal_exclusions,
-        "calibration_status": model.calibration_status,
+        "calibration_status": status,
     }
+    info["min_distinct_writers_per_class_role" if adaptive else "effective_calibration_people"] = effective_people
     if description:
         info["label_description"] = description
     if transfer:
@@ -135,7 +152,7 @@ def train_accounts(data, *, seed=42, pretrain=None, exclude_proxy_handles=None,
             info["exclusions_sha256"] = _source_digest(exclude_proxy_handles)
         if exclude_proxy_windows:
             info["excluded_windows_sha256"] = _source_digest(exclude_proxy_windows)
-    return ProfileArtifact(model, basis, {"rows": rows, "min_people": 6}, info,
+    return ProfileArtifact(model, basis, support_data, info,
                            tuple(sorted(_identities(train) | _identities(cal))))
 
 
@@ -205,15 +222,25 @@ def _estimate(artifact, a, b, prior, support):
     if swap:
         a, b = b, a
     original = [a, b]
-    reason = pair_reason(a, b)
-    counts = None
-    if not reason:
-        a, b, counts = _effective(a, b, support)
-        if min(counts.values()) < support.minimum:
-            reason = "unsupported_history_sizes"
-        elif artifact.model.calibration_status != "fitted":
-            reason = "calibration_found_no_directional_evidence"
-    result = None if reason else score(artifact.model, pair_features(a, b), prior)
+    counts = diagnostics = result = None
+    if isinstance(support, AdaptiveCalibration):
+        reason = adaptive_pair_reason(a, b)
+        if not reason:
+            features = adaptive_features.pair_features(a, b)
+            result = support.estimate(artifact.model.margin(features), _sizes(a, b), prior)
+            diagnostics = {k: result[k] for k in ("sampling_precision", "support_weight",
+                           "effective_calibration_pairs", "positive_writer_support", "negative_writer_support")}
+            diagnostics["calibration_status"] = support.status
+    else:
+        reason = pair_reason(a, b)
+        if not reason:
+            a, b, counts = _effective(a, b, support)
+            if min(counts.values()) < support.minimum:
+                reason = "unsupported_history_sizes"
+            elif artifact.model.calibration_status != "fitted":
+                reason = "calibration_found_no_directional_evidence"
+            else:
+                result = score(artifact.model, pair_features(a, b), prior)
     used = [a, b]
     if swap:
         original.reverse()
@@ -240,17 +267,33 @@ def _estimate(artifact, a, b, prior, support):
                        "used_words": final.words if result else 0}
                       for initial, final in zip(original, used)],
         "comparable_calibration_writers": counts,
+        "calibration_support": diagnostics,
         "link_evidence": link_evidence, "probability_interpretation": event,
         "label_description": artifact.provenance.get("label_description"),
     }
 
 
-def compare_accounts(artifact, left, right, *, prior):
-    return _estimate(artifact, make_profile(left), make_profile(right), prior, _Support(artifact.support))
+def _support(artifact):
+    if isinstance(artifact.model, AdaptiveRanker):
+        return AdaptiveCalibration.from_dict(artifact.support)
+    return _Support(artifact.support)
+
+
+def compare_accounts(artifact, left, right, *, prior=None):
+    """When no prior is known, report evidence and labeled probability scenarios."""
+    result = _estimate(artifact, make_profile(left), make_profile(right),
+                       0.5 if prior is None else prior, _support(artifact))
+    if prior is None:
+        evidence = result["log_likelihood_ratio"]
+        result.update(prior=None, estimated_same_person_probability=None, same_account_proxy_probability=None)
+        result["probability_scenarios"] = [
+            {"prior": p, "probability": posterior(evidence, p) if evidence is not None else None}
+            for p in (0.01, 0.1, 0.5)]
+    return result
 
 
 def evaluate_accounts(data, artifact, *, split="test", prior, seed=None, bootstrap_samples=300):
-    """Use the same history-size guard and probability mapping as live comparison."""
+    """Use the fitted method’s trial design and normal inference path."""
     from .profile_probability import quality_intervals, window_quality_intervals
 
     posterior(0.0, prior)
@@ -272,11 +315,14 @@ def evaluate_accounts(data, artifact, *, split="test", prior, seed=None, bootstr
         posts = proxy_posts(load_split(data, split)[0])
     if split != "calibration" and _identities(posts) & set(artifact.fit_people):
         raise ValueError("evaluation contains writers or handles used in training or calibration")
-    support = _Support(artifact.support)
+    support = _support(artifact)
     reasons = Counter()
     labels, evidence, left_people, right_people, supported = [], [], [], [], []
     used_subset = 0
-    for trial, a, b in _trial_stream(posts, basis, sampling_seed + (1 if split == "calibration" else 2)):
+    adaptive = isinstance(artifact.model, AdaptiveRanker)
+    sampler = sample_adaptive_trials if adaptive else sample_trials
+    offset = 1 if split == "calibration" else 2
+    for trial, a, b in _trial_stream(posts, basis, sampling_seed + offset, sampler):
         out = _estimate(artifact, a, b, prior, support)
         valid = out["status"] == "estimated"
         if not valid:
@@ -308,6 +354,7 @@ def evaluate_accounts(data, artifact, *, split="test", prior, seed=None, bootstr
         "distinct_positive_people": len({p for p, is_same in zip(left_people, labels) if is_same}),
         "sampled_pairs": len(y), "returned_estimates": int(supported.sum()),
         "coverage": float(supported.mean()), "used_representative_subsets": used_subset,
+        "trial_design": "adaptive" if adaptive else "baseline",
         "inconclusive_reasons": dict(reasons), "prior": prior,
         "all_pairs_using_prior_when_inconclusive": result, "estimated_pairs_only": eligible_report,
         "window_uncertainty": window_uncertainty,

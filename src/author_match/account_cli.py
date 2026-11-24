@@ -19,6 +19,8 @@ def add_commands(commands):
     parser = commands.add_parser("train-accounts", help="fit and calibrate an account-history model")
     parser.add_argument("data", type=Path, help="linked-owner JSONL or prepared proxy corpus directory")
     parser.add_argument("model", type=Path, help="output data-only .json[.gz] checkpoint")
+    parser.add_argument("--method", choices=("adaptive", "baseline"), default="adaptive",
+                        help="adaptive set comparison (default) or v1 pooled baseline")
     parser.add_argument("--pretrain", type=Path, help="fit ranking coefficients on other prepared accounts")
     parser.add_argument("--exclude-proxy-handles", type=Path, help="source account IDs to exclude from pretraining, one per line")
     parser.add_argument("--exclude-proxy-windows", type=Path, help="source post-ID prefixes to exclude, one per line")
@@ -33,8 +35,8 @@ def add_commands(commands):
     parser.add_argument("--left-handle", help="select this account from the first export")
     parser.add_argument("--right-handle", help="select this account from the second export")
     parser.add_argument("--model", type=Path, required=True)
-    parser.add_argument("--prior", type=_prior, required=True,
-                        help="estimated same-person frequency for candidate pairs before reading their writing")
+    parser.add_argument("--prior", type=_prior,
+                        help="estimated same-person frequency for candidate pairs before reading their writing; omit for scenarios")
     parser = commands.add_parser("evaluate-accounts", help="test a frozen account probability model")
     parser.add_argument("data", type=Path)
     parser.add_argument("model", type=Path)
@@ -53,7 +55,7 @@ def run(args):
         model = train_accounts(args.data, seed=args.seed, pretrain=args.pretrain,
                                exclude_proxy_handles=args.exclude_proxy_handles,
                                exclude_proxy_windows=args.exclude_proxy_windows,
-                               description=args.description, link_evidence=args.link_evidence)
+                               description=args.description, link_evidence=args.link_evidence, method=args.method)
         save_profile_model(args.model, model)
         if args.report:
             write_json(args.report, model.provenance)

@@ -187,6 +187,16 @@ def pair_reason(left, right):
         if min(left.posts, right.posts) < MIN_POSTS:
             return "too_few_distinct_posts"
         return "too_few_profile_words"
+    return _copy_reason(left, right)
+
+
+def adaptive_pair_reason(left, right):
+    if not left.posts or not right.posts:
+        return "no_independent_writing"
+    return _copy_reason(left, right)
+
+
+def _copy_reason(left, right):
     # A common sampling threshold keeps the containment estimate comparable
     # when one history has many more shingles than the other.
     a, b = left._shingles, right._shingles

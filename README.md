@@ -1,6 +1,6 @@
 # author-match
 
-Compare writing across two account histories, including accounts with different handles and unequal numbers of posts. The account model aggregates each history and estimates the probability of a shared writer under an explicit match prior. A separate single-post verifier returns a decision for two individual texts.
+Compare writing across two account histories, including accounts with different handles and unequal numbers of posts. The account model learns which writing habits recur together across an individual’s posts. It compares the two distributions of writing styles and estimates how much the evidence changes the odds of a shared writer. A separate single-post verifier returns a decision for two individual texts.
 
 ## Install and try it
 
@@ -29,11 +29,13 @@ author-match compare-accounts first.jsonl second.jsonl --model runs/accounts.jso
 
 For a shared export, use its path twice with `--left-handle NAME --right-handle OTHER`. JSON arrays of post strings, JSONL.gz, and directories with one UTF-8 text file per post are also supported. Only text contributes to the score. Handles select the two histories.
 
-The prior is your estimated fraction of genuinely linked pairs among comparable candidates **before** reading their writing. A prior of 0.10 assumes about one genuine link in ten such pairs. The model estimates a likelihood ratio for the writing and multiplies the prior odds by that ratio. For example, a likelihood ratio of 3 changes a 10% prior to 25%, and a 1% prior to about 2.9%. The caller supplies the prior to make that choice visible.
+The prior is your estimated fraction of genuinely linked pairs among comparable candidates **before** reading their writing. A prior of 0.10 assumes about one genuine link in ten such pairs. The model estimates a likelihood ratio for the writing and multiplies the prior odds by that ratio. For example, a likelihood ratio of 3 changes a 10% prior to 25%, and a 1% prior to about 2.9%. Omit `--prior` to see the likelihood ratio and probability scenarios for 1%, 10%, and 50% starting probabilities. The model uses no assumed population match rate.
 
 The command returns `estimated_same_person_probability` for a model calibrated on labeled different-handle pairs, along with the prior, evidence ratio, label interpretation, amount of writing used, and calibration support. The pilot uses reported IRC nickname changes as evidence of a common session operator. Applying that result to social accounts assumes the same relationship between writing and ownership. A model trained entirely on sections of the same account returns `same_account_proxy_probability` instead.
 
-The histories can be different sizes. The model aggregates character, word, and writing-style statistics within each post, then across each account. It removes duplicates and shared posts before comparing profiles. It uses all eligible posts when there are comparable calibration examples. For very large or unequal histories it can select a reproducible subset based on post and word counts, before scoring. If either side has fewer than two distinct usable posts, fewer than 15 words in total, excessive copied material, or insufficient calibration support, it returns `inconclusive` with a reason.
+The adaptive model accepts any unequal or equal counts, including a single usable post. It removes duplicate and shared posts and uses every remaining independent post. A history of short replies and occasional formal explanations contributes both styles and how frequently they occur. The score combines similarities in character patterns and word choice with the distribution of habits within each post. A calibration model learns how the score relates to authorship across different quantities of writing. Weak support reduces the evidence smoothly toward the prior. Empty histories and substantial copied passages can still yield `inconclusive`.
+
+The public benchmark compares the old and adaptive models on identical writing, including one-post stress tests and a transfer test in four other communities. The labeled handle links are IRC session renames. Calibration across separate social-media accounts remains an open measurement. [Adaptive methodology, benchmark, and reproduction](benchmarks/account-adaptive/README.md)
 
 ### Train a profile checkpoint
 
@@ -44,7 +46,7 @@ author-match train-accounts owners.jsonl runs/accounts.json.gz
 author-match evaluate-accounts owners.jsonl runs/accounts.json.gz --split test --prior 0.10
 ```
 
-With limited ownership labels, use `--pretrain PREPARED_DIRECTORY` to learn writing-style weights from a separate collection, then calibrate and test on linked handles. Keep people, aliases, and source windows disjoint from the pretraining material. The pilot documents the exclusions used for that step. Pointing `train-accounts` at a prepared directory alone fits the same-account proxy model. [Account benchmark and reproduction](benchmarks/account-profiles/README.md)
+With limited ownership labels, use `--pretrain PREPARED_DIRECTORY` to learn writing-style weights from a separate collection, then calibrate and test on linked handles. Keep people, aliases, and source windows disjoint from the pretraining material. Pointing `train-accounts` at a prepared directory alone fits the same-account proxy model. Training defaults to `--method adaptive`. Use `--method baseline` to reproduce the original pooled account model. Both checkpoint formats load through the same comparison command. [Original pooled benchmark](benchmarks/account-profiles/README.md)
 
 ## Compare two individual posts
 

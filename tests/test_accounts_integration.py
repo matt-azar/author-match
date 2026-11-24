@@ -71,7 +71,9 @@ class AccountCommandsTest(unittest.TestCase):
                                    author=f"person-{writer}", thread=pid, community="invented",
                                    split_group=f"window-{writer // 8}")
                         f.write(json.dumps(row) + "\n")
-        run("train-accounts", cls.corpus, cls.model, "--description", "invented aliases for a test")
+        run("train-accounts", cls.corpus, cls.model, "--description", "invented aliases for a test", "--method", "baseline")
+        cls.adaptive = cls.base / "adaptive.json.gz"
+        run("train-accounts", cls.corpus, cls.adaptive)
 
     def compare(self, left, right, prior=0.5, model=None):
         a, b = self.base / "left.json", self.base / "right.json"
@@ -102,8 +104,13 @@ class AccountCommandsTest(unittest.TestCase):
         odds = prior / (1 - prior) * same["likelihood_ratio"]
         self.assertAlmostEqual(rarer["estimated_same_person_probability"], odds / (1 + odds))
 
-        with contextlib.redirect_stderr(io.StringIO()), self.assertRaises(SystemExit):
-            main(["compare-accounts", "a", "b", "--model", str(self.model)])
+        no_prior = run("compare-accounts", self.base / "left.json", self.base / "right.json",
+                       "--model", self.model)
+        self.assertIsNone(no_prior["estimated_same_person_probability"])
+        self.assertIsNone(no_prior["prior"])
+        self.assertEqual(no_prior["log_likelihood_ratio"], same["log_likelihood_ratio"])
+        self.assertEqual(no_prior["probability_scenarios"][0]["probability"],
+                         rarer["estimated_same_person_probability"])
 
     def test_duplicate_and_shared_writing_supplies_no_additional_evidence(self):
         a, b = fictional_history(128, 0), fictional_history(129, 0)
@@ -126,6 +133,29 @@ class AccountCommandsTest(unittest.TestCase):
         self.assertEqual(result["reason"], "unsupported_history_sizes")
         self.assertIsNone(result["estimated_same_person_probability"])
         self.assertEqual([h["used_posts"] for h in result["histories"]], [0, 0])
+
+    def test_adaptive_uses_the_entire_unequal_history(self):
+        left = fictional_history(127, 0, 1)
+        right = fictional_history(128, 1, 73)
+        out = self.compare(left, right, model=self.adaptive)
+        self.assertEqual(out["status"], "estimated")
+        self.assertEqual([h["used_posts"] for h in out["histories"]], [1, 73])
+        self.assertGreater(out["calibration_support"]["support_weight"], 0)
+        reverse = self.compare(right[::-1], left, model=self.adaptive)
+        self.assertEqual(out["log_likelihood_ratio"], reverse["log_likelihood_ratio"])
+        self.assertEqual(out["calibration_support"], reverse["calibration_support"])
+        copied = self.compare(left, left, model=self.adaptive)
+        self.assertEqual(copied["reason"], "no_independent_writing")
+        self.assertIsNone(copied["estimated_same_person_probability"])
+        for prior in (0.01, 0.9):
+            other = self.compare(left, right, prior, model=self.adaptive)
+            self.assertEqual(other["log_likelihood_ratio"], out["log_likelihood_ratio"])
+
+    def test_adaptive_gzip_reload_and_evaluate(self):
+        out = run("evaluate-accounts", self.corpus, self.adaptive, "--bootstrap-samples", 0)
+        self.assertEqual(out["used_representative_subsets"], 0)
+        self.assertGreater(out["returned_estimates"], 0)
+        self.assertEqual(out["model_label_basis"], "linked_handles")
 
     def test_evaluate_reload_and_reject_external_identity_overlap(self):
         report = self.base / "eval.json"

@@ -1,0 +1,295 @@
+{
+  "split": "test",
+  "model_label_basis": "linked_handles",
+  "evaluation_label_basis": "linked_handles",
+  "source_sha256": "eb852e7b94d1202a5018dfe4c0b75897fd0c0f453f17929069c98bcee2de49de",
+  "people": 61,
+  "distinct_positive_people": 16,
+  "sampled_pairs": 164,
+  "returned_estimates": 164,
+  "coverage": 1.0,
+  "used_representative_subsets": 0,
+  "trial_design": "adaptive",
+  "inconclusive_reasons": {},
+  "prior": 0.5,
+  "all_pairs_using_prior_when_inconclusive": {
+    "prior": 0.5,
+    "pairs": 164,
+    "same": 82,
+    "different": 82,
+    "roc_auc": 0.7544616299821535,
+    "brier": 0.20224230353310294,
+    "log_loss": 0.5872377326228729,
+    "prior_only": {
+      "brier": 0.25,
+      "log_loss": 0.6931471805599453
+    },
+    "expected_calibration_error": 0.0677439611673814,
+    "reliability": [
+      {
+        "lower": 0.0,
+        "upper": 0.1,
+        "pairs": 1,
+        "same": 0,
+        "different": 1,
+        "target_weight": 0.006097560975609756,
+        "mean_probability": 0.07522738466995833,
+        "observed_same_fraction": 0.0
+      },
+      {
+        "lower": 0.1,
+        "upper": 0.2,
+        "pairs": 6,
+        "same": 2,
+        "different": 4,
+        "target_weight": 0.036585365853658534,
+        "mean_probability": 0.15637362505763483,
+        "observed_same_fraction": 0.33333333333333337
+      },
+      {
+        "lower": 0.2,
+        "upper": 0.3,
+        "pairs": 29,
+        "same": 7,
+        "different": 22,
+        "target_weight": 0.17682926829268297,
+        "mean_probability": 0.2547761522230946,
+        "observed_same_fraction": 0.24137931034482754
+      },
+      {
+        "lower": 0.3,
+        "upper": 0.4,
+        "pairs": 56,
+        "same": 21,
+        "different": 35,
+        "target_weight": 0.3414634146341463,
+        "mean_probability": 0.3534275759672416,
+        "observed_same_fraction": 0.37500000000000006
+      },
+      {
+        "lower": 0.4,
+        "upper": 0.5,
+        "pairs": 23,
+        "same": 13,
+        "different": 10,
+        "target_weight": 0.14024390243902443,
+        "mean_probability": 0.4525923042251271,
+        "observed_same_fraction": 0.5652173913043478
+      },
+      {
+        "lower": 0.5,
+        "upper": 0.6,
+        "pairs": 17,
+        "same": 11,
+        "different": 6,
+        "target_weight": 0.10365853658536586,
+        "mean_probability": 0.5528751785766253,
+        "observed_same_fraction": 0.6470588235294118
+      },
+      {
+        "lower": 0.6,
+        "upper": 0.7,
+        "pairs": 16,
+        "same": 12,
+        "different": 4,
+        "target_weight": 0.0975609756097561,
+        "mean_probability": 0.6476082774283091,
+        "observed_same_fraction": 0.7500000000000001
+      },
+      {
+        "lower": 0.7,
+        "upper": 0.8,
+        "pairs": 5,
+        "same": 5,
+        "different": 0,
+        "target_weight": 0.03048780487804878,
+        "mean_probability": 0.7462941268265793,
+        "observed_same_fraction": 1.0
+      },
+      {
+        "lower": 0.8,
+        "upper": 0.9,
+        "pairs": 8,
+        "same": 8,
+        "different": 0,
+        "target_weight": 0.04878048780487805,
+        "mean_probability": 0.8669424809612652,
+        "observed_same_fraction": 1.0
+      },
+      {
+        "lower": 0.9,
+        "upper": 1.0,
+        "pairs": 3,
+        "same": 3,
+        "different": 0,
+        "target_weight": 0.01829268292682927,
+        "mean_probability": 0.9287654031737682,
+        "observed_same_fraction": 1.0
+      }
+    ]
+  },
+  "estimated_pairs_only": {
+    "prior": 0.5,
+    "pairs": 164,
+    "same": 82,
+    "different": 82,
+    "roc_auc": 0.7544616299821535,
+    "brier": 0.20224230353310294,
+    "log_loss": 0.5872377326228729,
+    "prior_only": {
+      "brier": 0.25,
+      "log_loss": 0.6931471805599453
+    },
+    "expected_calibration_error": 0.0677439611673814,
+    "reliability": [
+      {
+        "lower": 0.0,
+        "upper": 0.1,
+        "pairs": 1,
+        "same": 0,
+        "different": 1,
+        "target_weight": 0.006097560975609756,
+        "mean_probability": 0.07522738466995833,
+        "observed_same_fraction": 0.0
+      },
+      {
+        "lower": 0.1,
+        "upper": 0.2,
+        "pairs": 6,
+        "same": 2,
+        "different": 4,
+        "target_weight": 0.036585365853658534,
+        "mean_probability": 0.15637362505763483,
+        "observed_same_fraction": 0.33333333333333337
+      },
+      {
+        "lower": 0.2,
+        "upper": 0.3,
+        "pairs": 29,
+        "same": 7,
+        "different": 22,
+        "target_weight": 0.17682926829268297,
+        "mean_probability": 0.2547761522230946,
+        "observed_same_fraction": 0.24137931034482754
+      },
+      {
+        "lower": 0.3,
+        "upper": 0.4,
+        "pairs": 56,
+        "same": 21,
+        "different": 35,
+        "target_weight": 0.3414634146341463,
+        "mean_probability": 0.3534275759672416,
+        "observed_same_fraction": 0.37500000000000006
+      },
+      {
+        "lower": 0.4,
+        "upper": 0.5,
+        "pairs": 23,
+        "same": 13,
+        "different": 10,
+        "target_weight": 0.14024390243902443,
+        "mean_probability": 0.4525923042251271,
+        "observed_same_fraction": 0.5652173913043478
+      },
+      {
+        "lower": 0.5,
+        "upper": 0.6,
+        "pairs": 17,
+        "same": 11,
+        "different": 6,
+        "target_weight": 0.10365853658536586,
+        "mean_probability": 0.5528751785766253,
+        "observed_same_fraction": 0.6470588235294118
+      },
+      {
+        "lower": 0.6,
+        "upper": 0.7,
+        "pairs": 16,
+        "same": 12,
+        "different": 4,
+        "target_weight": 0.0975609756097561,
+        "mean_probability": 0.6476082774283091,
+        "observed_same_fraction": 0.7500000000000001
+      },
+      {
+        "lower": 0.7,
+        "upper": 0.8,
+        "pairs": 5,
+        "same": 5,
+        "different": 0,
+        "target_weight": 0.03048780487804878,
+        "mean_probability": 0.7462941268265793,
+        "observed_same_fraction": 1.0
+      },
+      {
+        "lower": 0.8,
+        "upper": 0.9,
+        "pairs": 8,
+        "same": 8,
+        "different": 0,
+        "target_weight": 0.04878048780487805,
+        "mean_probability": 0.8669424809612652,
+        "observed_same_fraction": 1.0
+      },
+      {
+        "lower": 0.9,
+        "upper": 1.0,
+        "pairs": 3,
+        "same": 3,
+        "different": 0,
+        "target_weight": 0.01829268292682927,
+        "mean_probability": 0.9287654031737682,
+        "observed_same_fraction": 1.0
+      }
+    ]
+  },
+  "window_uncertainty": {
+    "method": "Percentile bootstrap resampling complete study windows",
+    "note": "Approximate 95% intervals conditional on the fitted model, observed windows and trial design. Each draw uses the declared prior. Positive improvement means lower loss than predicting the prior for every pair. Degenerate intervals and intervals with too few usable draws are omitted.",
+    "seed": 42,
+    "prior": 0.5,
+    "windows": 15,
+    "pairs": 164,
+    "repetitions": 1000,
+    "usable_repetitions": 1000,
+    "intervals_95": {
+      "brier_improvement": [
+        0.009098803402922396,
+        0.08203416270830584
+      ],
+      "log_loss_improvement": [
+        0.019386355737160774,
+        0.18486194224291264
+      ],
+      "roc_auc": [
+        0.6154686979166667,
+        0.8642598363599056
+      ]
+    }
+  },
+  "quality_uncertainty": {
+    "method": "Percentile bootstrap resampling both trial endpoints by person",
+    "note": "Approximate 95% intervals conditional on the fitted model, observed people and trial design. Each draw uses the declared prior. Positive improvement means lower loss than predicting the prior for every pair. Degenerate intervals and intervals with too few usable draws are omitted.",
+    "seed": 42,
+    "prior": 0.5,
+    "people": 61,
+    "pairs": 164,
+    "repetitions": 1000,
+    "usable_repetitions": 1000,
+    "intervals_95": {
+      "brier_improvement": [
+        0.004160325799869868,
+        0.09139768193585802
+      ],
+      "log_loss_improvement": [
+        0.00995887236536726,
+        0.20443087059612666
+      ],
+      "roc_auc": [
+        0.5988154196820621,
+        0.8911465872488956
+      ]
+    }
+  }
+}

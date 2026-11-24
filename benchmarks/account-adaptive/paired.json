@@ -1,0 +1,364 @@
+{
+  "source_sha256": "eb852e7b94d1202a5018dfe4c0b75897fd0c0f453f17929069c98bcee2de49de",
+  "checkpoint_sha256": {
+    "baseline": "2a514987f47a085aa04ddc28faf6ae946482deff035be4afc34ee2cb16d710d9",
+    "candidate": "9a564ce310f316fbc1fda7b88726138514ed602c5c19e3e245b37202e707d478"
+  },
+  "split": "test",
+  "sampling_seed": 44,
+  "trials": 120,
+  "positive_pairs": 60,
+  "distinct_linked_people": 11,
+  "writers": 46,
+  "windows": 11,
+  "bootstrap": {
+    "method": "paired percentile bootstrap resampling entire recording windows",
+    "replicates": 1000,
+    "seed": 91283
+  },
+  "interpretation": [
+    "The original IRC test results were visible during method development. This paired comparison is exploratory.",
+    "The sparse scenarios thin the original trials before inference and reuse the same people and windows.",
+    "Each model contributes the prior on an inconclusive pair. All losses use class weights for the stated prior.",
+    "Lexical cosine excludes the model's list of common terms. It can capture both topic and writer vocabulary and yields ranks only.",
+    "Positive gains favor the candidate. Intervals condition on the fixed checkpoints and sampled windows."
+  ],
+  "scenarios": {
+    "original": {
+      "content_word_cosine_roc_auc": 0.7206944444444445,
+      "median_supplied_posts_left_right": [
+        3.0,
+        3.5
+      ],
+      "unequal_length_pairs": 94,
+      "coverage": {
+        "baseline": {
+          "estimates": 120,
+          "coverage": 1.0,
+          "estimates_using_all_independent_posts": 115,
+          "fraction_of_independent_posts_used_over_all_trials": 0.957680250783699,
+          "inconclusive_reasons": {}
+        },
+        "candidate": {
+          "estimates": 120,
+          "coverage": 1.0,
+          "estimates_using_all_independent_posts": 120,
+          "fraction_of_independent_posts_used_over_all_trials": 1.0,
+          "inconclusive_reasons": {}
+        }
+      },
+      "all_pairs": [
+        {
+          "prior": 0.5,
+          "usable_bootstrap_replicates": 1000,
+          "metrics": {
+            "roc_auc": {
+              "baseline": 0.7969444444444445,
+              "candidate": 0.8219444444444445,
+              "candidate_gain": 0.025000000000000022,
+              "paired_gain_interval_95": [
+                -0.030343341260404316,
+                0.10486435024718864
+              ]
+            },
+            "brier": {
+              "baseline": 0.18618557308751793,
+              "candidate": 0.17737029527321513,
+              "candidate_gain": 0.008815277814302802,
+              "paired_gain_interval_95": [
+                -0.009749104410882045,
+                0.030748493417924468
+              ]
+            },
+            "log_loss": {
+              "baseline": 0.5549856950192005,
+              "candidate": 0.5332430682610254,
+              "candidate_gain": 0.021742626758175065,
+              "paired_gain_interval_95": [
+                -0.022605914321538904,
+                0.07332728217689588
+              ]
+            }
+          },
+          "always_prior": {
+            "roc_auc": 0.5,
+            "brier": 0.25,
+            "log_loss": 0.6931471805599453
+          }
+        },
+        {
+          "prior": 0.1,
+          "usable_bootstrap_replicates": 1000,
+          "metrics": {
+            "roc_auc": {
+              "baseline": 0.7969444444444445,
+              "candidate": 0.8219444444444445,
+              "candidate_gain": 0.025000000000000022,
+              "paired_gain_interval_95": [
+                -0.030343341260404316,
+                0.10486435024718864
+              ]
+            },
+            "brier": {
+              "baseline": 0.07522097109155314,
+              "candidate": 0.0737026432384535,
+              "candidate_gain": 0.0015183278530996325,
+              "paired_gain_interval_95": [
+                -0.0009471075697341659,
+                0.004303411535822438
+              ]
+            },
+            "log_loss": {
+              "baseline": 0.26670698556635614,
+              "candidate": 0.25913276382224965,
+              "candidate_gain": 0.007574221744106491,
+              "paired_gain_interval_95": [
+                -0.006456454799646408,
+                0.022885082072514402
+              ]
+            }
+          },
+          "always_prior": {
+            "roc_auc": 0.5,
+            "brier": 0.09000000000000001,
+            "log_loss": 0.3250829733914482
+          }
+        }
+      ]
+    },
+    "one_vs_history": {
+      "content_word_cosine_roc_auc": 0.6266666666666666,
+      "median_supplied_posts_left_right": [
+        1.0,
+        3.5
+      ],
+      "unequal_length_pairs": 120,
+      "coverage": {
+        "baseline": {
+          "estimates": 0,
+          "coverage": 0.0,
+          "estimates_using_all_independent_posts": 0,
+          "fraction_of_independent_posts_used_over_all_trials": 0.0,
+          "inconclusive_reasons": {
+            "too_few_distinct_posts": 120
+          }
+        },
+        "candidate": {
+          "estimates": 120,
+          "coverage": 1.0,
+          "estimates_using_all_independent_posts": 120,
+          "fraction_of_independent_posts_used_over_all_trials": 1.0,
+          "inconclusive_reasons": {}
+        }
+      },
+      "all_pairs": [
+        {
+          "prior": 0.5,
+          "usable_bootstrap_replicates": 1000,
+          "metrics": {
+            "roc_auc": {
+              "baseline": 0.5,
+              "candidate": 0.8047222222222222,
+              "candidate_gain": 0.3047222222222222,
+              "paired_gain_interval_95": [
+                0.23999635796045785,
+                0.38299222974701896
+              ]
+            },
+            "brier": {
+              "baseline": 0.25,
+              "candidate": 0.19297575274582088,
+              "candidate_gain": 0.05702424725417912,
+              "paired_gain_interval_95": [
+                0.03564181335788311,
+                0.08259197532604677
+              ]
+            },
+            "log_loss": {
+              "baseline": 0.6931471805599453,
+              "candidate": 0.5685501207344887,
+              "candidate_gain": 0.12459705982545655,
+              "paired_gain_interval_95": [
+                0.07973478104750405,
+                0.17761849353903145
+              ]
+            }
+          },
+          "always_prior": {
+            "roc_auc": 0.5,
+            "brier": 0.25,
+            "log_loss": 0.6931471805599453
+          }
+        },
+        {
+          "prior": 0.1,
+          "usable_bootstrap_replicates": 1000,
+          "metrics": {
+            "roc_auc": {
+              "baseline": 0.5,
+              "candidate": 0.8047222222222222,
+              "candidate_gain": 0.3047222222222222,
+              "paired_gain_interval_95": [
+                0.23999635796045785,
+                0.38299222974701896
+              ]
+            },
+            "brier": {
+              "baseline": 0.09000000000000005,
+              "candidate": 0.0793751671679438,
+              "candidate_gain": 0.010624832832056258,
+              "paired_gain_interval_95": [
+                0.005590693797613508,
+                0.016284646735044553
+              ]
+            },
+            "log_loss": {
+              "baseline": 0.32508297339144826,
+              "candidate": 0.2770316510852622,
+              "candidate_gain": 0.048051322306186084,
+              "paired_gain_interval_95": [
+                0.029625907888035367,
+                0.06936050548639362
+              ]
+            }
+          },
+          "always_prior": {
+            "roc_auc": 0.5,
+            "brier": 0.09000000000000001,
+            "log_loss": 0.3250829733914482
+          }
+        }
+      ]
+    },
+    "one_vs_one": {
+      "content_word_cosine_roc_auc": 0.53375,
+      "median_supplied_posts_left_right": [
+        1.0,
+        1.0
+      ],
+      "unequal_length_pairs": 0,
+      "coverage": {
+        "baseline": {
+          "estimates": 0,
+          "coverage": 0.0,
+          "estimates_using_all_independent_posts": 0,
+          "fraction_of_independent_posts_used_over_all_trials": 0.0,
+          "inconclusive_reasons": {
+            "too_few_distinct_posts": 120
+          }
+        },
+        "candidate": {
+          "estimates": 120,
+          "coverage": 1.0,
+          "estimates_using_all_independent_posts": 120,
+          "fraction_of_independent_posts_used_over_all_trials": 1.0,
+          "inconclusive_reasons": {}
+        }
+      },
+      "all_pairs": [
+        {
+          "prior": 0.5,
+          "usable_bootstrap_replicates": 1000,
+          "metrics": {
+            "roc_auc": {
+              "baseline": 0.5,
+              "candidate": 0.6455555555555555,
+              "candidate_gain": 0.14555555555555555,
+              "paired_gain_interval_95": [
+                0.024139856061899053,
+                0.27075428700859605
+              ]
+            },
+            "brier": {
+              "baseline": 0.25,
+              "candidate": 0.23419966985707674,
+              "candidate_gain": 0.015800330142923258,
+              "paired_gain_interval_95": [
+                -0.024249041581771612,
+                0.05167715032222249
+              ]
+            },
+            "log_loss": {
+              "baseline": 0.6931471805599453,
+              "candidate": 0.6570978820773081,
+              "candidate_gain": 0.03604929848263716,
+              "paired_gain_interval_95": [
+                -0.05919249662327587,
+                0.11927125835368667
+              ]
+            }
+          },
+          "always_prior": {
+            "roc_auc": 0.5,
+            "brier": 0.25,
+            "log_loss": 0.6931471805599453
+          }
+        },
+        {
+          "prior": 0.1,
+          "usable_bootstrap_replicates": 1000,
+          "metrics": {
+            "roc_auc": {
+              "baseline": 0.5,
+              "candidate": 0.6455555555555555,
+              "candidate_gain": 0.14555555555555555,
+              "paired_gain_interval_95": [
+                0.024139856061899053,
+                0.27075428700859605
+              ]
+            },
+            "brier": {
+              "baseline": 0.09000000000000005,
+              "candidate": 0.08669143662184225,
+              "candidate_gain": 0.0033085633781577972,
+              "paired_gain_interval_95": [
+                -0.011849699079886202,
+                0.01726042788405872
+              ]
+            },
+            "log_loss": {
+              "baseline": 0.32508297339144826,
+              "candidate": 0.3108183447806532,
+              "candidate_gain": 0.014264628610795083,
+              "paired_gain_interval_95": [
+                -0.03376377171328703,
+                0.0547776414755136
+              ]
+            }
+          },
+          "always_prior": {
+            "roc_auc": 0.5,
+            "brier": 0.09000000000000001,
+            "log_loss": 0.3250829733914482
+          }
+        }
+      ]
+    }
+  },
+  "lexical_overlap_sensitivity": {
+    "selection": "Same anchor posts, owner, recording window and reference post count. One positive and one negative matched without replacement within the cosine tolerance. Model scores were unavailable to matching.",
+    "max_allowed_cosine_difference": 0.05,
+    "matched_positive_negative_pairs": 21,
+    "trials": 42,
+    "windows": 9,
+    "distinct_linked_people": 9,
+    "caveat": "Exploratory subset of the same pilot. Matching controls this lexical-overlap measure. Unmeasured topic cues and differences in the amount of text can remain.",
+    "mean_absolute_cosine_difference": 0.01673392459385609,
+    "max_observed_cosine_difference": 0.048507125007266595,
+    "pooled_roc_auc": {
+      "lexical_only": 0.4705215419501134,
+      "baseline": 0.6938775510204082,
+      "candidate": 0.7301587301587301,
+      "candidate_gain": 0.03628117913832196,
+      "paired_gain_interval_95": [
+        -0.09754250000000003,
+        0.17578125
+      ]
+    },
+    "within_matched_pair_concordance": {
+      "lexical_only": 0.5714285714285714,
+      "baseline": 0.7619047619047619,
+      "candidate": 0.7619047619047619
+    }
+  }
+}

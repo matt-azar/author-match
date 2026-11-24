@@ -36,7 +36,7 @@ git -C data/irc-source checkout 82ed04f9627a45d0d6f2ec3c8683c88eb408a0d5
 python scripts/prepare_irc_pilot.py data/irc-source data/irc.jsonl
 author-match prepare data/irc.jsonl data/irc-prepared
 python scripts/prepare_irc_controlled_handles.py data/irc-source data/linked-controlled.jsonl --exclude-proxy-authors data/exclude-authors.txt --exclude-proxy-windows data/exclude-windows.txt
-author-match train-accounts data/linked-controlled.jsonl runs/accounts.json.gz --pretrain data/irc-prepared --exclude-proxy-handles data/exclude-authors.txt --exclude-proxy-windows data/exclude-windows.txt --link-evidence same_session_rename --description "Observed IRC nickname changes; comparison handles were concurrently active in the same log window." --report runs/account-training.json
+author-match train-accounts data/linked-controlled.jsonl runs/accounts.json.gz --method baseline --pretrain data/irc-prepared --exclude-proxy-handles data/exclude-authors.txt --exclude-proxy-windows data/exclude-windows.txt --link-evidence same_session_rename --description "Observed IRC nickname changes; comparison handles were concurrently active in the same log window." --report runs/account-training.json
 author-match evaluate-accounts data/linked-controlled.jsonl runs/accounts.json.gz --prior 0.5 --output runs/account-test.json
 author-match evaluate-accounts data/linked-controlled.jsonl runs/accounts.json.gz --prior 0.1 --output runs/account-test-10.json
 author-match compare-accounts examples/account-posts.jsonl examples/account-posts.jsonl --left-handle sample_a --right-handle sample_b --model runs/accounts.json.gz --prior 0.10

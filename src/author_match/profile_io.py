@@ -10,18 +10,22 @@ import os
 from pathlib import Path
 import tempfile
 
+from . import adaptive_features
+from .adaptive_calibration import AdaptiveCalibration
+from .adaptive_ranker import AdaptiveRanker
 from .portable import _digests, _json_float
 from .profile_features import FEATURE_COUNT, FEATURE_VERSION
 from .profile_probability import AccountModel
 
 _FORMAT = "author-match/profile-v1"
+_ADAPTIVE_FORMAT = "author-match/profile-v2"
 _LABEL_BASES = ("account_proxy", "linked_handles")
 _HANDLE_KEYS = ("handle", "author", "speaker", "user")
 
 
 @dataclass
 class ProfileArtifact:
-    model: AccountModel
+    model: AccountModel | AdaptiveRanker
     label_basis: str
     support: dict
     provenance: dict
@@ -58,28 +62,34 @@ def _calibration_support(value):
 
 def _profile_artifact(value):
     keys = {"format", "model", "label_basis", "support", "provenance", "fit_people"}
-    if not isinstance(value, dict) or value.keys() != keys or value["format"] != _FORMAT:
+    if not isinstance(value, dict) or value.keys() != keys or value["format"] not in (_FORMAT, _ADAPTIVE_FORMAT):
         raise ValueError("unrecognized account profile checkpoint schema")
     if value["label_basis"] not in _LABEL_BASES:
         raise ValueError("unknown account profile label basis")
+    adaptive = value["format"] == _ADAPTIVE_FORMAT
+    model_type = AdaptiveRanker if adaptive else AccountModel
     model = value["model"]
-    if not isinstance(model, dict) or model.keys() != {f.name for f in fields(AccountModel) if f.init}:
+    if not isinstance(model, dict) or model.keys() != {f.name for f in fields(model_type) if f.init}:
         raise ValueError("invalid account model fields")
     provenance = value["provenance"]
     if not isinstance(provenance, dict):
         raise ValueError("account profile provenance must be a JSON object")
     version = provenance.get("feature_version")
-    if type(version) is not int or version != FEATURE_VERSION:
+    if type(version) is not int or version != (adaptive_features.FEATURE_VERSION if adaptive else FEATURE_VERSION):
         raise ValueError("unsupported account profile feature version")
     if provenance.get("label_basis", value["label_basis"]) != value["label_basis"]:
         raise ValueError("account label basis disagrees with provenance")
     try:
-        fitted = AccountModel(**model)
+        fitted = model_type(**model)
     except OverflowError as error:
         raise ValueError("out-of-range account model parameter") from error
-    if fitted.feature_count != FEATURE_COUNT:
+    if fitted.feature_count != (adaptive_features.FEATURE_COUNT if adaptive else FEATURE_COUNT):
         raise ValueError("account model width disagrees with the profile feature definition")
-    return ProfileArtifact(fitted, value["label_basis"], _calibration_support(value["support"]),
+    if adaptive:
+        AdaptiveCalibration.from_dict(value["support"])
+    else:
+        _calibration_support(value["support"])
+    return ProfileArtifact(fitted, value["label_basis"], value["support"],
                            provenance, _digests(value["fit_people"]))
 
 
@@ -93,9 +103,10 @@ def _checkpoint_path(path):
 def save_profile_model(path, artifact: ProfileArtifact):
     """Publish one complete data-only model, replacing any prior version atomically."""
     path = _checkpoint_path(path)
-    if not isinstance(artifact, ProfileArtifact) or type(artifact.model) is not AccountModel:
+    if not isinstance(artifact, ProfileArtifact) or type(artifact.model) not in (AccountModel, AdaptiveRanker):
         raise ValueError("expected a fitted account profile model")
-    payload = {"format": _FORMAT, **asdict(artifact)}
+    fmt = _ADAPTIVE_FORMAT if isinstance(artifact.model, AdaptiveRanker) else _FORMAT
+    payload = {"format": fmt, **asdict(artifact)}
     payload["fit_people"] = list(artifact.fit_people)
     _profile_artifact(payload)
     raw = json.dumps(payload, allow_nan=False, ensure_ascii=True, sort_keys=True,

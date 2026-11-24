@@ -1,0 +1,418 @@
+{
+  "label": "same observed handle in distinct annotated conversations",
+  "controls": "different handles within the same community and distinct conversations",
+  "seed": 44,
+  "bootstrap_by_handle": 500,
+  "inconclusive_evaluation": "predict the prior",
+  "source_sha256": "c5e3e7b1b57eb9edafe3672a29cfd8fe8fcfc72e40c71f1fc10570d15017b646",
+  "excluded_source_sha256": [
+    "e97e40ee1c9f284a835ad2d344d70668e623fe2b9f2df083b0c7349182a98b53",
+    "eb852e7b94d1202a5018dfe4c0b75897fd0c0f453f17929069c98bcee2de49de"
+  ],
+  "input_posts": 1912,
+  "input_handles": 222,
+  "input_communities": 4,
+  "input_conversations": 199,
+  "excluded": {
+    "seen_source_writing": 36,
+    "no_usable_prose": 6
+  },
+  "models": {
+    "baseline": {
+      "checkpoint_sha256": "2a514987f47a085aa04ddc28faf6ae946482deff035be4afc34ee2cb16d710d9",
+      "feature_version": 1,
+      "overall": {
+        "trials": 462,
+        "same": 231,
+        "returned_estimates": 462,
+        "participating_handles": 107,
+        "positive_handles": 42,
+        "metrics": {
+          "0.5": {
+            "brier": 0.20845301523748566,
+            "log_loss": 0.6138224269388328,
+            "roc_auc": 0.742199359082476,
+            "prior_only": {
+              "brier": 0.25,
+              "log_loss": 0.6931471805599453
+            }
+          },
+          "0.1": {
+            "brier": 0.08775426147252484,
+            "log_loss": 0.30171064539817716,
+            "roc_auc": 0.742199359082476,
+            "prior_only": {
+              "brier": 0.09000000000000001,
+              "log_loss": 0.3250829733914482
+            }
+          }
+        },
+        "intervals_at_first_prior": {
+          "brier_improvement": [
+            0.008584635259774293,
+            0.07128105776505013
+          ],
+          "log_loss_improvement": [
+            -0.012615192144933797,
+            0.15487706825807018
+          ],
+          "roc_auc": [
+            0.6622914244790639,
+            0.811227503493988
+          ]
+        }
+      },
+      "by_community": {
+        "mediawiki": {
+          "trials": 92,
+          "same": 46,
+          "returned_estimates": 92,
+          "participating_handles": 23,
+          "positive_handles": 10,
+          "metrics": {
+            "0.5": {
+              "brier": 0.16178248441629023,
+              "log_loss": 0.4813116031258129,
+              "roc_auc": 0.8397920604914932,
+              "prior_only": {
+                "brier": 0.25,
+                "log_loss": 0.6931471805599453
+              }
+            },
+            "0.1": {
+              "brier": 0.06536611249718928,
+              "log_loss": 0.23405699076053238,
+              "roc_auc": 0.8397920604914932,
+              "prior_only": {
+                "brier": 0.09000000000000001,
+                "log_loss": 0.3250829733914482
+              }
+            }
+          }
+        },
+        "rust": {
+          "trials": 180,
+          "same": 90,
+          "returned_estimates": 180,
+          "participating_handles": 38,
+          "positive_handles": 16,
+          "metrics": {
+            "0.5": {
+              "brier": 0.20196507162747807,
+              "log_loss": 0.5947184089635047,
+              "roc_auc": 0.7638271604938272,
+              "prior_only": {
+                "brier": 0.25,
+                "log_loss": 0.6931471805599453
+              }
+            },
+            "0.1": {
+              "brier": 0.08071925053182687,
+              "log_loss": 0.2852107505593535,
+              "roc_auc": 0.7638271604938272,
+              "prior_only": {
+                "brier": 0.09000000000000001,
+                "log_loss": 0.3250829733914482
+              }
+            }
+          }
+        },
+        "stripe": {
+          "trials": 106,
+          "same": 53,
+          "returned_estimates": 106,
+          "participating_handles": 31,
+          "positive_handles": 9,
+          "metrics": {
+            "0.5": {
+              "brier": 0.22315738571822735,
+              "log_loss": 0.6495177920809534,
+              "roc_auc": 0.7046991812032751,
+              "prior_only": {
+                "brier": 0.25,
+                "log_loss": 0.6931471805599453
+              }
+            },
+            "0.1": {
+              "brier": 0.08888268824099792,
+              "log_loss": 0.31130458275085854,
+              "roc_auc": 0.7046991812032751,
+              "prior_only": {
+                "brier": 0.09000000000000001,
+                "log_loss": 0.3250829733914482
+              }
+            }
+          }
+        },
+        "ubuntu-meeting": {
+          "trials": 84,
+          "same": 42,
+          "returned_estimates": 84,
+          "participating_handles": 15,
+          "positive_handles": 7,
+          "metrics": {
+            "0.5": {
+              "brier": 0.25491557969454187,
+              "log_loss": 0.7548463593351685,
+              "roc_auc": 0.6544784580498866,
+              "prior_only": {
+                "brier": 0.25,
+                "log_loss": 0.6931471805599453
+              }
+            },
+            "0.1": {
+              "brier": 0.12592567144393377,
+              "log_loss": 0.39905778752040705,
+              "roc_auc": 0.6544784580498866,
+              "prior_only": {
+                "brier": 0.09000000000000001,
+                "log_loss": 0.3250829733914482
+              }
+            }
+          }
+        }
+      },
+      "inconclusive_reasons": {}
+    },
+    "adaptive": {
+      "checkpoint_sha256": "9a564ce310f316fbc1fda7b88726138514ed602c5c19e3e245b37202e707d478",
+      "feature_version": 2,
+      "overall": {
+        "trials": 462,
+        "same": 231,
+        "returned_estimates": 462,
+        "participating_handles": 107,
+        "positive_handles": 42,
+        "metrics": {
+          "0.5": {
+            "brier": 0.18942186834821334,
+            "log_loss": 0.5621243091901621,
+            "roc_auc": 0.7946065478533011,
+            "prior_only": {
+              "brier": 0.25,
+              "log_loss": 0.6931471805599453
+            }
+          },
+          "0.1": {
+            "brier": 0.07839066335903332,
+            "log_loss": 0.27373300194339223,
+            "roc_auc": 0.7946065478533011,
+            "prior_only": {
+              "brier": 0.09000000000000001,
+              "log_loss": 0.3250829733914482
+            }
+          }
+        },
+        "intervals_at_first_prior": {
+          "brier_improvement": [
+            0.03901579109864969,
+            0.08458625803842862
+          ],
+          "log_loss_improvement": [
+            0.08225578447899172,
+            0.18499163478405556
+          ],
+          "roc_auc": [
+            0.727170127217889,
+            0.8648916619073215
+          ]
+        }
+      },
+      "by_community": {
+        "mediawiki": {
+          "trials": 92,
+          "same": 46,
+          "returned_estimates": 92,
+          "participating_handles": 23,
+          "positive_handles": 10,
+          "metrics": {
+            "0.5": {
+              "brier": 0.16965309454994332,
+              "log_loss": 0.5082041118355246,
+              "roc_auc": 0.8402646502835539,
+              "prior_only": {
+                "brier": 0.25,
+                "log_loss": 0.6931471805599453
+              }
+            },
+            "0.1": {
+              "brier": 0.06758655549993331,
+              "log_loss": 0.2437090739809024,
+              "roc_auc": 0.8402646502835539,
+              "prior_only": {
+                "brier": 0.09000000000000001,
+                "log_loss": 0.3250829733914482
+              }
+            }
+          }
+        },
+        "rust": {
+          "trials": 180,
+          "same": 90,
+          "returned_estimates": 180,
+          "participating_handles": 38,
+          "positive_handles": 16,
+          "metrics": {
+            "0.5": {
+              "brier": 0.17837665999324354,
+              "log_loss": 0.5386472819320529,
+              "roc_auc": 0.8414814814814814,
+              "prior_only": {
+                "brier": 0.25,
+                "log_loss": 0.6931471805599453
+              }
+            },
+            "0.1": {
+              "brier": 0.07809854390529443,
+              "log_loss": 0.2674289597928221,
+              "roc_auc": 0.8414814814814814,
+              "prior_only": {
+                "brier": 0.09000000000000001,
+                "log_loss": 0.3250829733914482
+              }
+            }
+          }
+        },
+        "stripe": {
+          "trials": 106,
+          "same": 53,
+          "returned_estimates": 106,
+          "participating_handles": 31,
+          "positive_handles": 9,
+          "metrics": {
+            "0.5": {
+              "brier": 0.18786678589177336,
+              "log_loss": 0.5628984201106153,
+              "roc_auc": 0.8070487718049127,
+              "prior_only": {
+                "brier": 0.25,
+                "log_loss": 0.6931471805599453
+              }
+            },
+            "0.1": {
+              "brier": 0.08157728302425848,
+              "log_loss": 0.27889247893596014,
+              "roc_auc": 0.8070487718049127,
+              "prior_only": {
+                "brier": 0.09000000000000001,
+                "log_loss": 0.3250829733914482
+              }
+            }
+          }
+        },
+        "ubuntu-meeting": {
+          "trials": 84,
+          "same": 42,
+          "returned_estimates": 84,
+          "participating_handles": 15,
+          "positive_handles": 7,
+          "metrics": {
+            "0.5": {
+              "brier": 0.236704052082952,
+              "log_loss": 0.6705108247320466,
+              "roc_auc": 0.6445578231292518,
+              "prior_only": {
+                "brier": 0.25,
+                "log_loss": 0.6931471805599453
+              }
+            },
+            "0.1": {
+              "brier": 0.0868284935994658,
+              "log_loss": 0.3136142447819573,
+              "roc_auc": 0.6445578231292518,
+              "prior_only": {
+                "brier": 0.09000000000000001,
+                "log_loss": 0.3250829733914482
+              }
+            }
+          }
+        }
+      },
+      "inconclusive_reasons": {}
+    }
+  },
+  "paired_comparison": {
+    "baseline": "baseline",
+    "candidate": "adaptive",
+    "method": "Percentile bootstrap resampling handles at both endpoints within the observed communities",
+    "note": "Positive gains favor the candidate. Intervals condition on fitted models and the observed communities.",
+    "by_prior": [
+      {
+        "prior": 0.5,
+        "usable_bootstrap_replicates": 500,
+        "metrics": {
+          "roc_auc": {
+            "baseline": 0.7421993590824759,
+            "candidate": 0.7946065478533011,
+            "candidate_gain": 0.052407188770825175,
+            "paired_gain_interval_95": [
+              -0.002404915015998054,
+              0.1092230693967162
+            ]
+          },
+          "brier": {
+            "baseline": 0.20845301523748566,
+            "candidate": 0.18942186834821334,
+            "candidate_gain": 0.01903114688927232,
+            "paired_gain_interval_95": [
+              -0.0007324424350837604,
+              0.04215282113654965
+            ]
+          },
+          "log_loss": {
+            "baseline": 0.6138224269388332,
+            "candidate": 0.5621243091901621,
+            "candidate_gain": 0.05169811774867106,
+            "paired_gain_interval_95": [
+              -0.005979013536467702,
+              0.12102930450480473
+            ]
+          }
+        },
+        "always_prior": {
+          "roc_auc": 0.5,
+          "brier": 0.25,
+          "log_loss": 0.6931471805599453
+        }
+      },
+      {
+        "prior": 0.1,
+        "usable_bootstrap_replicates": 500,
+        "metrics": {
+          "roc_auc": {
+            "baseline": 0.7421993590824759,
+            "candidate": 0.7946065478533011,
+            "candidate_gain": 0.052407188770825175,
+            "paired_gain_interval_95": [
+              -0.002404915015998054,
+              0.1092230693967162
+            ]
+          },
+          "brier": {
+            "baseline": 0.08775426147252481,
+            "candidate": 0.07839066335903332,
+            "candidate_gain": 0.009363598113491495,
+            "paired_gain_interval_95": [
+              -0.00579497406856791,
+              0.03145252702960356
+            ]
+          },
+          "log_loss": {
+            "baseline": 0.30171064539817705,
+            "candidate": 0.2737330019433922,
+            "candidate_gain": 0.027977643454784873,
+            "paired_gain_interval_95": [
+              -0.010306710337659465,
+              0.08007975917992481
+            ]
+          }
+        },
+        "always_prior": {
+          "roc_auc": 0.5,
+          "brier": 0.09000000000000001,
+          "log_loss": 0.3250829733914482
+        }
+      }
+    ]
+  }
+}
