@@ -1,0 +1,119 @@
+{
+  "counts": {
+    "conflicting_copy_clusters": 1041,
+    "dropped_thread_conflicts": 9834,
+    "empty_after_cleaning": 493,
+    "exact_copy_rows": 6054,
+    "input_rows": 58686,
+    "near_copy_rows": 80,
+    "usable_before_split": 51018
+  },
+  "file_sha256": {
+    "calibration.pairs.jsonl": "b03cf01b01d1de5a1ef0eea2227bc0dc7d03b3c8c8a16e93d581cae416093ac2",
+    "calibration.posts.jsonl": "65e8a1b57e89a60d03fe173067b23b7c32da22b106b52d8ca17872dcfccb048c",
+    "dev.pairs.jsonl": "23130324f06181130d60512207f438dc44f489e88b118743486342eba9ec193f",
+    "dev.posts.jsonl": "2585cce07e9e5181d5c8de0eee0521b21e66720468a009798c461a14f3defefb",
+    "test.pairs.jsonl": "ec615bef763f3d306d710382a54dd333b918fd2a0365b48d9015b68c530a06f9",
+    "test.posts.jsonl": "20bf8073d79d01dadd523d482c54aa0d7b6812ce3a13fdcd31636b8b0e876a3c",
+    "train.pairs.jsonl": "0d2c4c5acb642ac3583e62066445fc00797f3d3ba1d7771cd27ed2934e78aa7e",
+    "train.posts.jsonl": "19d8ac542a698ecc9092be43fa94f22aef08bac8a306c01c92bcff790f46802e"
+  },
+  "settings": {
+    "conversation_metadata_sha256": null,
+    "excluded_accounts": [],
+    "format_version": 2,
+    "holdout_communities": [],
+    "pairs_per_author": 12,
+    "seed": 42,
+    "source_community_fallback": null,
+    "source_sha256": "37f01324d7105a094418959f034752c468ad356f938021239287ccdd0f209f04"
+  },
+  "source": "irc.jsonl",
+  "splits": {
+    "calibration": {
+      "authors": 922,
+      "conditions": {
+        "different:same_community": 997,
+        "different:same_thread": 90,
+        "same:same_community": 1087
+      },
+      "known_communities": 1,
+      "length_bands": {
+        "10-24": 422,
+        "25-49": 62,
+        "<10": 1690
+      },
+      "max_pairs_per_author": 12,
+      "negative_pairs": 1087,
+      "paired_authors": 549,
+      "pairs": 2174,
+      "positive_pairs": 1087,
+      "posts": 6110,
+      "threads": 1258
+    },
+    "dev": {
+      "authors": 884,
+      "conditions": {
+        "different:same_community": 989,
+        "different:same_thread": 93,
+        "same:same_community": 1082
+      },
+      "known_communities": 1,
+      "length_bands": {
+        "10-24": 384,
+        "25-49": 28,
+        "<10": 1752
+      },
+      "max_pairs_per_author": 12,
+      "negative_pairs": 1082,
+      "paired_authors": 548,
+      "pairs": 2164,
+      "positive_pairs": 1082,
+      "posts": 5212,
+      "threads": 1211
+    },
+    "test": {
+      "authors": 808,
+      "conditions": {
+        "different:same_community": 972,
+        "different:same_thread": 97,
+        "same:same_community": 1069
+      },
+      "known_communities": 1,
+      "length_bands": {
+        "10-24": 452,
+        "25-49": 30,
+        "<10": 1656
+      },
+      "max_pairs_per_author": 12,
+      "negative_pairs": 1069,
+      "paired_authors": 498,
+      "pairs": 2138,
+      "positive_pairs": 1069,
+      "posts": 5461,
+      "threads": 1152
+    },
+    "train": {
+      "authors": 3321,
+      "conditions": {
+        "different:same_community": 4180,
+        "different:same_thread": 720,
+        "same:same_community": 4900
+      },
+      "known_communities": 1,
+      "length_bands": {
+        "10-24": 1940,
+        "25-49": 160,
+        "50-99": 4,
+        "<10": 7696
+      },
+      "max_pairs_per_author": 12,
+      "negative_pairs": 4900,
+      "paired_authors": 2217,
+      "pairs": 9800,
+      "positive_pairs": 4900,
+      "posts": 24401,
+      "threads": 4616
+    }
+  }
+}

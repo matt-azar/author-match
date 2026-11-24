@@ -1,0 +1,711 @@
+{
+  "thresholds": {
+    "overall": {
+      "upper": 0.774405035529,
+      "lower": 0.326506224951
+    },
+    "by_length": {
+      "10-24": {
+        "upper": 0.803316662237,
+        "lower": 0.326506224951
+      },
+      "100+": {
+        "upper": null,
+        "lower": null
+      },
+      "25-49": {
+        "upper": null,
+        "lower": 0.32417727677
+      },
+      "50-99": {
+        "upper": null,
+        "lower": null
+      },
+      "<10": {
+        "upper": 0.776493139972,
+        "lower": 0.32530767137
+      }
+    },
+    "calibration_support": {
+      "10-24": {
+        "different_pairs": 211,
+        "eligible_different": 211,
+        "eligible_same": 210,
+        "same_pairs": 211
+      },
+      "100+": {
+        "different_pairs": 0,
+        "eligible_different": 0,
+        "eligible_same": 0,
+        "same_pairs": 0
+      },
+      "25-49": {
+        "different_pairs": 31,
+        "eligible_different": 31,
+        "eligible_same": 31,
+        "same_pairs": 31
+      },
+      "50-99": {
+        "different_pairs": 0,
+        "eligible_different": 0,
+        "eligible_same": 0,
+        "same_pairs": 0
+      },
+      "<10": {
+        "different_pairs": 845,
+        "eligible_different": 479,
+        "eligible_same": 480,
+        "same_pairs": 845
+      }
+    },
+    "effective_by_length": {
+      "<10": {
+        "upper": 0.776493139972,
+        "lower": 0.32530767137
+      },
+      "10-24": {
+        "upper": 0.803316662237,
+        "lower": 0.326506224951
+      },
+      "25-49": {
+        "upper": null,
+        "lower": 0.32417727677
+      },
+      "50-99": {
+        "upper": null,
+        "lower": null
+      },
+      "100+": {
+        "upper": null,
+        "lower": null
+      }
+    }
+  },
+  "overall": {
+    "pairs": 556,
+    "eligible_pairs": 412,
+    "authors": 132,
+    "same_pairs": 278,
+    "different_pairs": 278,
+    "decisions": {
+      "true_different": {
+        "different_author": 28,
+        "inconclusive": 244,
+        "same_author": 6
+      },
+      "true_same": {
+        "different_author": 19,
+        "inconclusive": 234,
+        "same_author": 25
+      }
+    },
+    "evidence_exclusions": {
+      "too_short": 144
+    },
+    "roc_auc": 0.5867708710729258,
+    "roc_auc_eligible": 0.5968498738534814,
+    "recall": 0.08992805755395683,
+    "false_match_rate": 0.02158273381294964,
+    "false_reject_rate": 0.0683453237410072,
+    "coverage": 0.14028776978417265,
+    "error_among_decided": 0.32051282051282054
+  },
+  "by_length": {
+    "<10": {
+      "pairs": 404,
+      "eligible_pairs": 260,
+      "authors": 118,
+      "same_pairs": 202,
+      "different_pairs": 202,
+      "decisions": {
+        "true_different": {
+          "different_author": 15,
+          "inconclusive": 183,
+          "same_author": 4
+        },
+        "true_same": {
+          "different_author": 15,
+          "inconclusive": 175,
+          "same_author": 12
+        }
+      },
+      "evidence_exclusions": {
+        "too_short": 144
+      },
+      "roc_auc": 0.5581070483285953,
+      "roc_auc_eligible": 0.5623703703703702,
+      "recall": 0.0594059405940594,
+      "false_match_rate": 0.019801980198019802,
+      "false_reject_rate": 0.07425742574257425,
+      "coverage": 0.11386138613861387,
+      "error_among_decided": 0.41304347826086957,
+      "intervals_95": {
+        "recall": [
+          0.026148560209424083,
+          0.10654501748251749
+        ],
+        "false_match_rate": [
+          0.0,
+          0.06811602154828417
+        ],
+        "false_reject_rate": [
+          0.025394931709725194,
+          0.13613160399809615
+        ],
+        "coverage": [
+          0.07000350140056022,
+          0.17088398984168152
+        ],
+        "error_among_decided": [
+          0.2127498388136686,
+          0.586395474137931
+        ]
+      }
+    },
+    "10-24": {
+      "pairs": 136,
+      "eligible_pairs": 136,
+      "authors": 68,
+      "same_pairs": 68,
+      "different_pairs": 68,
+      "decisions": {
+        "true_different": {
+          "different_author": 12,
+          "inconclusive": 54,
+          "same_author": 2
+        },
+        "true_same": {
+          "different_author": 4,
+          "inconclusive": 51,
+          "same_author": 13
+        }
+      },
+      "evidence_exclusions": {},
+      "roc_auc": 0.6591695501730104,
+      "roc_auc_eligible": 0.6591695501730104,
+      "recall": 0.19117647058823528,
+      "false_match_rate": 0.029411764705882353,
+      "false_reject_rate": 0.058823529411764705,
+      "coverage": 0.22794117647058823,
+      "error_among_decided": 0.1935483870967742,
+      "intervals_95": {
+        "recall": [
+          0.054284759358288776,
+          0.38157388316151203
+        ],
+        "false_match_rate": [
+          0.0,
+          0.11296526054590572
+        ],
+        "false_reject_rate": [
+          0.0,
+          0.1325952458482579
+        ],
+        "coverage": [
+          0.12602415966386554,
+          0.3288213265004435
+        ],
+        "error_among_decided": [
+          0.036944444444444446,
+          0.44469696969696976
+        ]
+      }
+    },
+    "25-49": {
+      "pairs": 12,
+      "eligible_pairs": 12,
+      "authors": 10,
+      "same_pairs": 6,
+      "different_pairs": 6,
+      "decisions": {
+        "true_different": {
+          "different_author": 1,
+          "inconclusive": 5,
+          "same_author": 0
+        },
+        "true_same": {
+          "different_author": 0,
+          "inconclusive": 6,
+          "same_author": 0
+        }
+      },
+      "evidence_exclusions": {},
+      "roc_auc": 0.6388888888888888,
+      "roc_auc_eligible": 0.6388888888888888,
+      "recall": 0.0,
+      "false_match_rate": 0.0,
+      "false_reject_rate": 0.0,
+      "coverage": 0.08333333333333333,
+      "error_among_decided": 0.0,
+      "intervals_95": {
+        "coverage": [
+          0.0,
+          0.33645833333333286
+        ]
+      }
+    },
+    "50-99": {
+      "pairs": 4,
+      "eligible_pairs": 4,
+      "authors": 4,
+      "same_pairs": 2,
+      "different_pairs": 2,
+      "decisions": {
+        "true_different": {
+          "different_author": 0,
+          "inconclusive": 2,
+          "same_author": 0
+        },
+        "true_same": {
+          "different_author": 0,
+          "inconclusive": 2,
+          "same_author": 0
+        }
+      },
+      "evidence_exclusions": {},
+      "roc_auc": 0.5,
+      "roc_auc_eligible": 0.5,
+      "recall": 0.0,
+      "false_match_rate": 0.0,
+      "false_reject_rate": 0.0,
+      "coverage": 0.0,
+      "error_among_decided": null,
+      "intervals_95": {}
+    },
+    "100+": {
+      "pairs": 0,
+      "eligible_pairs": 0,
+      "authors": 0,
+      "same_pairs": 0,
+      "different_pairs": 0,
+      "decisions": {
+        "true_different": {
+          "different_author": 0,
+          "inconclusive": 0,
+          "same_author": 0
+        },
+        "true_same": {
+          "different_author": 0,
+          "inconclusive": 0,
+          "same_author": 0
+        }
+      },
+      "evidence_exclusions": {},
+      "roc_auc": null,
+      "roc_auc_eligible": null,
+      "recall": null,
+      "false_match_rate": null,
+      "false_reject_rate": null,
+      "coverage": null,
+      "error_among_decided": null,
+      "intervals_95": {}
+    }
+  },
+  "by_condition": {
+    "same_community": {
+      "pairs": 487,
+      "eligible_pairs": 367,
+      "authors": 123,
+      "same_pairs": 278,
+      "different_pairs": 209,
+      "decisions": {
+        "true_different": {
+          "different_author": 21,
+          "inconclusive": 185,
+          "same_author": 3
+        },
+        "true_same": {
+          "different_author": 19,
+          "inconclusive": 234,
+          "same_author": 25
+        }
+      },
+      "evidence_exclusions": {
+        "too_short": 120
+      },
+      "roc_auc": 0.5876217686138172,
+      "roc_auc_eligible": 0.6011058451816745,
+      "recall": 0.08992805755395683,
+      "false_match_rate": 0.014354066985645933,
+      "false_reject_rate": 0.0683453237410072,
+      "coverage": 0.13963039014373715,
+      "error_among_decided": 0.3235294117647059,
+      "intervals_95": {
+        "recall": [
+          0.050377906976744186,
+          0.15215587985885057
+        ],
+        "false_match_rate": [
+          0.0,
+          0.05
+        ],
+        "false_reject_rate": [
+          0.028640582997311828,
+          0.10616984844068784
+        ],
+        "coverage": [
+          0.09662733720180529,
+          0.18400830149289005
+        ],
+        "error_among_decided": [
+          0.15487578247261344,
+          0.4900510204081633
+        ]
+      }
+    },
+    "same_thread": {
+      "pairs": 69,
+      "eligible_pairs": 45,
+      "authors": 78,
+      "same_pairs": 0,
+      "different_pairs": 69,
+      "decisions": {
+        "true_different": {
+          "different_author": 7,
+          "inconclusive": 59,
+          "same_author": 3
+        },
+        "true_same": {
+          "different_author": 0,
+          "inconclusive": 0,
+          "same_author": 0
+        }
+      },
+      "evidence_exclusions": {
+        "too_short": 24
+      },
+      "roc_auc": null,
+      "roc_auc_eligible": null,
+      "recall": null,
+      "false_match_rate": 0.043478260869565216,
+      "false_reject_rate": null,
+      "coverage": 0.14492753623188406,
+      "error_among_decided": 0.3,
+      "intervals_95": {
+        "false_match_rate": [
+          0.0,
+          0.13237745098039216
+        ],
+        "coverage": [
+          0.03507259528130671,
+          0.3001666666666667
+        ],
+        "error_among_decided": [
+          0.0,
+          0.6939560439560437
+        ]
+      }
+    }
+  },
+  "by_time_gap": {},
+  "uncertainty": {
+    "method": "Percentile author bootstrap, resampling authors across both endpoints of a pair",
+    "level": 0.95,
+    "repetitions": 200,
+    "seed": 42,
+    "intervals": {
+      "recall": [
+        0.044761134088593175,
+        0.14009511642832062
+      ],
+      "false_match_rate": [
+        0.0,
+        0.05454270597127742
+      ],
+      "false_reject_rate": [
+        0.03063977445239644,
+        0.11164629617124723
+      ],
+      "coverage": [
+        0.09486363836146273,
+        0.18740130789754925
+      ],
+      "error_among_decided": [
+        0.20212912087912088,
+        0.45882835101253616
+      ]
+    },
+    "note": "Each interval resamples authors represented in that group and conditions on the fitted model, thresholds and observed author pairs. Missing intervals indicate insufficient or constant bootstrap estimates. A sample rate of zero does not establish a population rate of zero."
+  },
+  "split": "external",
+  "model": {
+    "author_match_version": "0.1.0",
+    "calibration_different_pairs": 1087,
+    "calibration_pairs": 2174,
+    "calibration_same_pairs": 1087,
+    "development_candidates": {
+      "char": {
+        "different_pairs": 1082,
+        "roc_auc": 0.5552435928536529,
+        "roc_auc_eligible": 0.5685067723958752,
+        "same_pairs": 1082,
+        "selection_false_match_rate": 0.006469500924214418,
+        "selection_recall": 0.04990757855822551,
+        "thresholds": {
+          "by_length": {
+            "10-24": {
+              "lower": 0.008180136792361736,
+              "upper": 0.24264255166053772
+            },
+            "100+": {
+              "lower": null,
+              "upper": null
+            },
+            "25-49": {
+              "lower": null,
+              "upper": null
+            },
+            "50-99": {
+              "lower": null,
+              "upper": null
+            },
+            "<10": {
+              "lower": null,
+              "upper": 0.13469427824020386
+            }
+          },
+          "calibration_support": {
+            "10-24": {
+              "different_pairs": 192,
+              "eligible_different": 192,
+              "eligible_same": 191,
+              "same_pairs": 192
+            },
+            "100+": {
+              "different_pairs": 0,
+              "eligible_different": 0,
+              "eligible_same": 0,
+              "same_pairs": 0
+            },
+            "25-49": {
+              "different_pairs": 14,
+              "eligible_different": 14,
+              "eligible_same": 12,
+              "same_pairs": 14
+            },
+            "50-99": {
+              "different_pairs": 0,
+              "eligible_different": 0,
+              "eligible_same": 0,
+              "same_pairs": 0
+            },
+            "<10": {
+              "different_pairs": 876,
+              "eligible_different": 483,
+              "eligible_same": 483,
+              "same_pairs": 876
+            }
+          },
+          "overall": {
+            "lower": null,
+            "upper": 0.15452788770198822
+          }
+        }
+      },
+      "style": {
+        "different_pairs": 1082,
+        "roc_auc": 0.6151355913093095,
+        "roc_auc_eligible": 0.6216894387860888,
+        "same_pairs": 1082,
+        "selection_false_match_rate": 0.00831792975970425,
+        "selection_recall": 0.051756007393715345,
+        "thresholds": {
+          "by_length": {
+            "10-24": {
+              "lower": 0.247421798398,
+              "upper": 0.738434259458
+            },
+            "100+": {
+              "lower": null,
+              "upper": null
+            },
+            "25-49": {
+              "lower": null,
+              "upper": null
+            },
+            "50-99": {
+              "lower": null,
+              "upper": null
+            },
+            "<10": {
+              "lower": 0.325626803738,
+              "upper": 0.769181394836
+            }
+          },
+          "calibration_support": {
+            "10-24": {
+              "different_pairs": 192,
+              "eligible_different": 192,
+              "eligible_same": 191,
+              "same_pairs": 192
+            },
+            "100+": {
+              "different_pairs": 0,
+              "eligible_different": 0,
+              "eligible_same": 0,
+              "same_pairs": 0
+            },
+            "25-49": {
+              "different_pairs": 14,
+              "eligible_different": 14,
+              "eligible_same": 12,
+              "same_pairs": 14
+            },
+            "50-99": {
+              "different_pairs": 0,
+              "eligible_different": 0,
+              "eligible_same": 0,
+              "same_pairs": 0
+            },
+            "<10": {
+              "different_pairs": 876,
+              "eligible_different": 483,
+              "eligible_same": 483,
+              "same_pairs": 876
+            }
+          },
+          "overall": {
+            "lower": 0.321536405721,
+            "upper": 0.766224533833
+          }
+        }
+      },
+      "word": {
+        "different_pairs": 1082,
+        "roc_auc": 0.5374358089524089,
+        "roc_auc_eligible": 0.5489406627257994,
+        "same_pairs": 1082,
+        "selection_false_match_rate": 0.0073937153419593345,
+        "selection_recall": 0.04066543438077634,
+        "thresholds": {
+          "by_length": {
+            "10-24": {
+              "lower": null,
+              "upper": 0.25225090980529785
+            },
+            "100+": {
+              "lower": null,
+              "upper": null
+            },
+            "25-49": {
+              "lower": null,
+              "upper": null
+            },
+            "50-99": {
+              "lower": null,
+              "upper": null
+            },
+            "<10": {
+              "lower": null,
+              "upper": 0.17295095324516296
+            }
+          },
+          "calibration_support": {
+            "10-24": {
+              "different_pairs": 192,
+              "eligible_different": 192,
+              "eligible_same": 191,
+              "same_pairs": 192
+            },
+            "100+": {
+              "different_pairs": 0,
+              "eligible_different": 0,
+              "eligible_same": 0,
+              "same_pairs": 0
+            },
+            "25-49": {
+              "different_pairs": 14,
+              "eligible_different": 14,
+              "eligible_same": 12,
+              "same_pairs": 14
+            },
+            "50-99": {
+              "different_pairs": 0,
+              "eligible_different": 0,
+              "eligible_same": 0,
+              "same_pairs": 0
+            },
+            "<10": {
+              "different_pairs": 876,
+              "eligible_different": 483,
+              "eligible_same": 483,
+              "same_pairs": 876
+            }
+          },
+          "overall": {
+            "lower": null,
+            "upper": 0.18704228103160858
+          }
+        }
+      }
+    },
+    "format_version": 1,
+    "method": "style",
+    "prepared_manifest_sha256": "e97e40ee1c9f284a835ad2d344d70668e623fe2b9f2df083b0c7349182a98b53",
+    "sklearn_version": "1.8.0",
+    "target_false_match_rate": 0.01,
+    "target_false_reject_rate": 0.05,
+    "thresholds": {
+      "by_length": {
+        "10-24": {
+          "lower": 0.326506224951,
+          "upper": 0.803316662237
+        },
+        "100+": {
+          "lower": null,
+          "upper": null
+        },
+        "25-49": {
+          "lower": 0.32417727677,
+          "upper": null
+        },
+        "50-99": {
+          "lower": null,
+          "upper": null
+        },
+        "<10": {
+          "lower": 0.32530767137,
+          "upper": 0.776493139972
+        }
+      },
+      "calibration_support": {
+        "10-24": {
+          "different_pairs": 211,
+          "eligible_different": 211,
+          "eligible_same": 210,
+          "same_pairs": 211
+        },
+        "100+": {
+          "different_pairs": 0,
+          "eligible_different": 0,
+          "eligible_same": 0,
+          "same_pairs": 0
+        },
+        "25-49": {
+          "different_pairs": 31,
+          "eligible_different": 31,
+          "eligible_same": 31,
+          "same_pairs": 31
+        },
+        "50-99": {
+          "different_pairs": 0,
+          "eligible_different": 0,
+          "eligible_same": 0,
+          "same_pairs": 0
+        },
+        "<10": {
+          "different_pairs": 845,
+          "eligible_different": 479,
+          "eligible_same": 480,
+          "same_pairs": 845
+        }
+      },
+      "overall": {
+        "lower": 0.326506224951,
+        "upper": 0.774405035529
+      }
+    },
+    "train_pairs": 9800
+  },
+  "evaluated_manifest_sha256": "c5e3e7b1b57eb9edafe3672a29cfd8fe8fcfc72e40c71f1fc10570d15017b646"
+}

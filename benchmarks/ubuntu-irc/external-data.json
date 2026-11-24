@@ -1,0 +1,51 @@
+{
+  "counts": {
+    "conflicting_copy_clusters": 5,
+    "dropped_thread_conflicts": 0,
+    "empty_after_cleaning": 30,
+    "exact_copy_rows": 34,
+    "input_rows": 1982,
+    "near_copy_rows": 1,
+    "usable_before_split": 1912
+  },
+  "file_sha256": {
+    "external.pairs.jsonl": "25b59cf13d07af86505e491a474618aab0bea82b9e0bc38453ee31b557f4391b",
+    "external.posts.jsonl": "7844640a1572a958340d07d2d73fc983e94062ceae829bba4dc0c632b6e83a99"
+  },
+  "settings": {
+    "conversation_metadata_sha256": null,
+    "excluded_accounts": [],
+    "external": true,
+    "format_version": 2,
+    "holdout_communities": [],
+    "pairs_per_author": 12,
+    "seed": 42,
+    "source_community_fallback": null,
+    "source_sha256": "e7dd8e885cac9b0a61ac712c313615b50733d9d087424377fa70bd8841259277"
+  },
+  "source": "irc-external.jsonl",
+  "splits": {
+    "external": {
+      "authors": 222,
+      "conditions": {
+        "different:same_community": 209,
+        "different:same_thread": 69,
+        "same:same_community": 278
+      },
+      "known_communities": 4,
+      "length_bands": {
+        "10-24": 136,
+        "25-49": 12,
+        "50-99": 4,
+        "<10": 404
+      },
+      "max_pairs_per_author": 12,
+      "negative_pairs": 278,
+      "paired_authors": 132,
+      "pairs": 556,
+      "positive_pairs": 278,
+      "posts": 1912,
+      "threads": 199
+    }
+  }
+}
