@@ -35,7 +35,7 @@ The command returns `estimated_same_person_probability` for a model calibrated o
 
 The adaptive model accepts any unequal or equal counts, including a single usable post. It removes duplicate and shared posts and uses every remaining independent post. A history of short replies and occasional formal explanations contributes both styles and how frequently they occur. The score combines similarities in character patterns and word choice with the distribution of habits within each post. A calibration model learns how the score relates to authorship across different quantities of writing. Weak support reduces the evidence smoothly toward the prior. Empty histories and substantial copied passages can still yield `inconclusive`.
 
-The public benchmark compares the old and adaptive models on identical writing, including one-post stress tests and a transfer test in four other communities. The labeled handle links are IRC session renames. Calibration across separate social-media accounts remains an open measurement. [Adaptive methodology, benchmark, and reproduction](benchmarks/account-adaptive/README.md)
+The public benchmark compares the old and adaptive models on identical writing, including one-post stress tests and a transfer test in four other communities. The labeled handle links are IRC session renames. Calibration across separate social-media accounts remains an open measurement. [Adaptive methodology, benchmark, and reproduction](benchmarks/account-adaptive/README.md) · [5, 20, and 50 summaries per handle on Wikipedia](benchmarks/history-size/README.md)
 
 ### Train a profile checkpoint
 

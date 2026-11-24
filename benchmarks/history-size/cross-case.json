@@ -1,0 +1,87 @@
+{
+  "source_revision": "b488e891e0840bb7d89c2dc03280af18d403f064",
+  "checkpoint_sha256": "9a564ce310f316fbc1fda7b88726138514ed602c5c19e3e245b37202e707d478",
+  "screened": 9388,
+  "eligible_positive_cases": 553,
+  "prior_fallbacks": {
+    "5": 1
+  },
+  "under_budget": {
+    "5": 1,
+    "50": 2
+  },
+  "cohort": {
+    "investigations": 12,
+    "budgets": {
+      "5": {
+        "auc": 0.5833333333333334,
+        "brier_50pct_prior": 0.2782242920140326,
+        "within_case_concordance": 0.5833333333333334
+      },
+      "20": {
+        "auc": 0.7222222222222223,
+        "brier_50pct_prior": 0.23130241716564667,
+        "within_case_concordance": 0.75,
+        "auc_change_from_previous_95pct": [
+          -0.03836805555555552,
+          0.28836805555555545
+        ]
+      },
+      "50": {
+        "auc": 0.5833333333333333,
+        "brier_50pct_prior": 0.28255466375752664,
+        "within_case_concordance": 0.6666666666666666,
+        "auc_change_from_previous_95pct": [
+          -0.27447916666666666,
+          -0.010243055555555677
+        ]
+      }
+    }
+  },
+  "nested_draws": 20,
+  "repeated_sampling": {
+    "5": {
+      "mean_auc": 0.5111111111111111,
+      "draw_auc_range": [
+        0.375,
+        0.6458333333333334
+      ],
+      "mean_brier": 0.2933008844981432,
+      "mean_within_case_concordance": 0.5083333333333334
+    },
+    "20": {
+      "mean_auc": 0.5402777777777776,
+      "draw_auc_range": [
+        0.4479166666666667,
+        0.7222222222222222
+      ],
+      "mean_brier": 0.2844248958034965,
+      "mean_within_case_concordance": 0.575,
+      "paired_auc_change_from_5_95pct": [
+        -0.039583333333333415,
+        0.09934895833333328
+      ],
+      "paired_auc_change_from_previous_95pct": [
+        -0.039583333333333415,
+        0.09934895833333328
+      ]
+    },
+    "50": {
+      "mean_auc": 0.5833333333333335,
+      "draw_auc_range": [
+        0.5833333333333334,
+        0.5833333333333334
+      ],
+      "mean_brier": 0.2825546637575267,
+      "mean_within_case_concordance": 0.6666666666666666,
+      "paired_auc_change_from_5_95pct": [
+        -0.03125868055555555,
+        0.19065104166666658
+      ],
+      "paired_auc_change_from_previous_95pct": [
+        -0.019097222222222102,
+        0.116015625
+      ]
+    }
+  }
+}

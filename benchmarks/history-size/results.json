@@ -1,0 +1,30 @@
+{
+  "source_revision": "b488e891e0840bb7d89c2dc03280af18d403f064",
+  "checkpoint_sha256": "9a564ce310f316fbc1fda7b88726138514ed602c5c19e3e245b37202e707d478",
+  "trials_using_fewer_than_supplied": {
+    "5": 2
+  },
+  "eligible_files": 9360,
+  "screened": 9360,
+  "prior_fallbacks": {},
+  "cohorts": {
+    "5": {
+      "investigations": 72,
+      "budgets": {
+        "5": {
+          "auc": 0.7201003086419753,
+          "brier_50pct_prior": 0.21730948260520266,
+          "within_case_concordance": 0.7916666666666666
+        }
+      }
+    },
+    "20": {
+      "investigations": 0,
+      "budgets": {}
+    },
+    "50": {
+      "investigations": 0,
+      "budgets": {}
+    }
+  }
+}
