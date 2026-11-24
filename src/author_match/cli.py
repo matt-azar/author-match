@@ -78,10 +78,15 @@ def parser():
     p.add_argument("--learning-rate", type=float, default=1e-5)
     p.add_argument("--seed", type=int, default=42)
     neural_args(p)
+    from .account_cli import add_commands
+    add_commands(commands)
     return root
 
 
 def run(args):
+    if args.command in ("train-accounts", "compare-accounts", "evaluate-accounts"):
+        from .account_cli import run as run_accounts
+        return run_accounts(args)
     if args.command == "prepare":
         return prepare(args.input, args.output, seed=args.seed, pairs_per_author=args.pairs_per_author,
                        holdout_communities=args.holdout_community, excluded_accounts=args.exclude_account,

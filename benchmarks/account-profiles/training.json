@@ -1,0 +1,31 @@
+{
+  "author_match_version": "0.2.0",
+  "sklearn_version": "1.8.0",
+  "feature_version": 1,
+  "seed": 42,
+  "label_basis": "linked_handles",
+  "link_evidence": "same_session_rename",
+  "training_label_basis": "account_proxy",
+  "transfer": true,
+  "source_sha256": "eb852e7b94d1202a5018dfe4c0b75897fd0c0f453f17929069c98bcee2de49de",
+  "training_authors": 1313,
+  "calibration_authors": 69,
+  "effective_calibration_people": 23,
+  "training_trials": {
+    "same": 2629,
+    "different": 2636
+  },
+  "calibration_trials": {
+    "same": 112,
+    "different": 112
+  },
+  "training_exclusions": {
+    "substantial_copied_passages": 7
+  },
+  "calibration_exclusions": {},
+  "calibration_status": "fitted",
+  "label_description": "Observed IRC nickname changes; comparison handles were concurrently active in the same log window.",
+  "pretrain_source_sha256": "e97e40ee1c9f284a835ad2d344d70668e623fe2b9f2df083b0c7349182a98b53",
+  "exclusions_sha256": "3b043a3ee8d554b523e5ab2f3925a6b6a0e3ec89623a03c3d32036d75cace84b",
+  "excluded_windows_sha256": "41289836c04bba70abd805ec10d10fe2eae5500e81a9dc69c4fd032f875f5ae4"
+}

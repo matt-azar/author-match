@@ -1,6 +1,6 @@
 # author-match
 
-Compare the writing style of two informal English posts by authors the model may never have seen. The CLI returns a symmetric similarity score and one of `same_author`, `different_author`, or `inconclusive`. Empty, copied, extremely short, and unsupported inputs can produce an inconclusive decision. The score ranks stylistic similarity. Its numerical value is not a probability of shared identity.
+Compare writing across two account histories, including accounts with different handles and unequal numbers of posts. The account model aggregates each history and estimates the probability of a shared writer under an explicit match prior. A separate single-post verifier returns a decision for two individual texts.
 
 ## Install and try it
 
@@ -12,15 +12,49 @@ source .venv/bin/activate
 python -m pip install -e .
 ```
 
-On Windows PowerShell, activate the environment with `.venv\Scripts\Activate.ps1`. Train a CPU checkpoint with the commands below, or use one you already have. To compare two UTF-8 files:
+On Windows PowerShell, activate the environment with `.venv\Scripts\Activate.ps1`.
+
+## Compare two accounts
+
+Supply a profile checkpoint and one JSONL export per account. Each line contains one original post, for example:
+
+```json
+{"handle":"writer_a","text":"i tried it twice this morning and got the same thing both times"}
+{"handle":"writer_a","text":"maybe sunday? i should have more time to look then"}
+```
+
+```sh
+author-match compare-accounts first.jsonl second.jsonl --model runs/accounts.json.gz --prior 0.10
+```
+
+For a shared export, use its path twice with `--left-handle NAME --right-handle OTHER`. JSON arrays of post strings, JSONL.gz, and directories with one UTF-8 text file per post are also supported. Only text contributes to the score. Handles select the two histories.
+
+The prior is your estimated fraction of genuinely linked pairs among comparable candidates **before** reading their writing. A prior of 0.10 assumes about one genuine link in ten such pairs. The model estimates a likelihood ratio for the writing and multiplies the prior odds by that ratio. For example, a likelihood ratio of 3 changes a 10% prior to 25%, and a 1% prior to about 2.9%. The caller supplies the prior to make that choice visible.
+
+The command returns `estimated_same_person_probability` for a model calibrated on labeled different-handle pairs, along with the prior, evidence ratio, label interpretation, amount of writing used, and calibration support. The pilot uses reported IRC nickname changes as evidence of a common session operator. Applying that result to social accounts assumes the same relationship between writing and ownership. A model trained entirely on sections of the same account returns `same_account_proxy_probability` instead.
+
+The histories can be different sizes. The model aggregates character, word, and writing-style statistics within each post, then across each account. It removes duplicates and shared posts before comparing profiles. It uses all eligible posts when there are comparable calibration examples. For very large or unequal histories it can select a reproducible subset based on post and word counts, before scoring. If either side has fewer than two distinct usable posts, fewer than 15 words in total, excessive copied material, or insufficient calibration support, it returns `inconclusive` with a reason.
+
+### Train a profile checkpoint
+
+A labeled JSONL file has one post per row with `person_id`, `handle`, and `text`. All known handles for one owner share a person ID. Supply `id`, `thread`, and `community` when available; optional `split_group` keeps all participants in a study window together and restricts its negative controls to that window. Preserve the original post boundaries. Each split needs writers with multiple handles and enough independent comparison writers.
+
+```sh
+author-match train-accounts owners.jsonl runs/accounts.json.gz
+author-match evaluate-accounts owners.jsonl runs/accounts.json.gz --split test --prior 0.10
+```
+
+With limited ownership labels, use `--pretrain PREPARED_DIRECTORY` to learn writing-style weights from a separate collection, then calibrate and test on linked handles. Keep people, aliases, and source windows disjoint from the pretraining material. The pilot documents the exclusions used for that step. Pointing `train-accounts` at a prepared directory alone fits the same-account proxy model. [Account benchmark and reproduction](benchmarks/account-profiles/README.md)
+
+## Compare two individual posts
 
 ```sh
 author-match compare first.txt second.txt --model runs/model.json.gz
 ```
 
-The pilot recovered 52 of 1,069 genuine pairs and falsely matched 7 of 1,069 different-writer pairs on held-out Ubuntu conversations. On four other chat channels it recovered 25 of 278 and falsely matched 6 of 278. At these thresholds most pairs receive `inconclusive`. Reddit accuracy is unmeasured. [Pilot results and reproduction](benchmarks/ubuntu-irc/README.md)
+This command uses the separate single-post checkpoint and returns a symmetric similarity score and one of `same_author`, `different_author`, or `inconclusive`. The Ubuntu pilot recovered 52 of 1,069 genuine pairs and falsely matched 7 of 1,069 different-writer pairs on its held-out test. [Single-post benchmark](benchmarks/ubuntu-irc/README.md)
 
-## Train on your own data
+### Train the single-post model
 
 Supply one independent post per JSON line. `author` can be an opaque account ID. `thread` identifies the conversation across the entire dataset. `community` is optional but needed to compare community conditions. A numeric Unix `timestamp` enables time-gap reporting. Only the post text reaches the model.
 
