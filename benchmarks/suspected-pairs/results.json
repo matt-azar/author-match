@@ -1,0 +1,350 @@
+{
+  "checkpoint_sha256": "9a564ce310f316fbc1fda7b88726138514ed602c5c19e3e245b37202e707d478",
+  "selection": "Equal weight on overall and lexical-matched out-of-fold log loss, five calibration-window folds",
+  "pattern_training_pairs": 9597,
+  "development_trials": 262,
+  "development_windows": 19,
+  "development_matched_trials": 118,
+  "development": {
+    "ranker": {
+      "auc": 0.8052561039566458,
+      "log_loss": 0.5549700988928187,
+      "matched_log_loss": 0.6157864030921018,
+      "selection_loss": 0.5853782509924602,
+      "threshold": 0.3990906967843463
+    },
+    "compression": {
+      "auc": 0.5314375619136413,
+      "log_loss": 0.6914184991107749,
+      "matched_log_loss": 0.6938709674528609,
+      "selection_loss": 0.692644733281818,
+      "threshold": 0.17375792593772704
+    },
+    "boundary_habits": {
+      "auc": 0.5093526018297302,
+      "log_loss": 0.6972616171945554,
+      "matched_log_loss": 0.6905913035528585,
+      "selection_loss": 0.693926460373707,
+      "threshold": 0.11609203622786902
+    },
+    "ranker_and_compression": {
+      "auc": 0.8001864693199697,
+      "log_loss": 0.5571982350806892,
+      "matched_log_loss": 0.6199985757254215,
+      "selection_loss": 0.5885984054030553,
+      "threshold": 0.4016196062751551
+    },
+    "ranker_and_habits": {
+      "auc": 0.8009440009323466,
+      "log_loss": 0.5603905328957981,
+      "matched_log_loss": 0.6128503692681199,
+      "selection_loss": 0.586620451081959,
+      "threshold": 0.47412046182258866
+    },
+    "combined": {
+      "auc": 0.7949420196958219,
+      "log_loss": 0.5627356720227373,
+      "matched_log_loss": 0.6178772167399944,
+      "selection_loss": 0.5903064443813659,
+      "threshold": 0.41202097191139736
+    },
+    "tfidf_cosine": {
+      "auc": 0.6134257910378182,
+      "log_loss": 0.6625182460065568,
+      "matched_log_loss": 0.6946895382936338,
+      "selection_loss": 0.6786038921500953,
+      "threshold": 0.45014973320548485
+    },
+    "learned_patterns": {
+      "auc": 0.7114387273468913,
+      "log_loss": 0.6215240599983194,
+      "matched_log_loss": 0.6790682212189946,
+      "selection_loss": 0.6502961406086569,
+      "threshold": 0.283507051666632
+    },
+    "ranker_and_patterns": {
+      "auc": 0.8072956121438144,
+      "log_loss": 0.5519903146203722,
+      "matched_log_loss": 0.6222524652825225,
+      "selection_loss": 0.5871213899514474,
+      "threshold": 0.4424687447906458
+    },
+    "all_signals": {
+      "auc": 0.7941262164209545,
+      "log_loss": 0.5587246172494865,
+      "matched_log_loss": 0.6260127586743988,
+      "selection_loss": 0.5923686879619426,
+      "threshold": 0.4585004118488918
+    }
+  },
+  "winner": "ranker",
+  "evaluation": {
+    "rename_all": {
+      "trials": 164,
+      "same_owners": 16,
+      "metrics": [
+        {
+          "prior": 0.5,
+          "usable_bootstrap_replicates": 1000,
+          "metrics": {
+            "roc_auc": {
+              "baseline": 0.7544616299821535,
+              "candidate": 0.7486615110053539,
+              "candidate_gain": -0.005800118976799551,
+              "paired_gain_interval_95": [
+                -0.013781607287346929,
+                0.0011292729217724892
+              ]
+            },
+            "brier": {
+              "baseline": 0.20224230353310288,
+              "candidate": 0.20257650744970293,
+              "candidate_gain": -0.000334203916600051,
+              "paired_gain_interval_95": [
+                -0.004103034809033521,
+                0.002992442391816305
+              ]
+            },
+            "log_loss": {
+              "baseline": 0.5872377326228729,
+              "candidate": 0.5868630976814639,
+              "candidate_gain": 0.0003746349414089911,
+              "paired_gain_interval_95": [
+                -0.009331783316407003,
+                0.008642624704278139
+              ]
+            }
+          },
+          "always_prior": {
+            "roc_auc": 0.5,
+            "brier": 0.25,
+            "log_loss": 0.6931471805599453
+          }
+        },
+        {
+          "prior": 0.1,
+          "usable_bootstrap_replicates": 1000,
+          "metrics": {
+            "roc_auc": {
+              "baseline": 0.7544616299821535,
+              "candidate": 0.7486615110053539,
+              "candidate_gain": -0.005800118976799551,
+              "paired_gain_interval_95": [
+                -0.013781607287346929,
+                0.0011292729217724892
+              ]
+            },
+            "brier": {
+              "baseline": 0.07839160232499014,
+              "candidate": 0.07726833869775807,
+              "candidate_gain": 0.0011232636272320712,
+              "paired_gain_interval_95": [
+                -0.00016930616502982586,
+                0.0020651434003008833
+              ]
+            },
+            "log_loss": {
+              "baseline": 0.28014437682426097,
+              "candidate": 0.2782634328028852,
+              "candidate_gain": 0.0018809440213757855,
+              "paired_gain_interval_95": [
+                -0.0024621538231662837,
+                0.005228376519212277
+              ]
+            }
+          },
+          "always_prior": {
+            "roc_auc": 0.5,
+            "brier": 0.09000000000000001,
+            "log_loss": 0.3250829733914482
+          }
+        }
+      ],
+      "frozen_operating_point": {
+        "threshold_log_odds": 0.3990906967843463,
+        "true_positive": 32,
+        "false_positive": 4,
+        "same": 82,
+        "different": 82
+      }
+    },
+    "rename_lexical_matched": {
+      "trials": 102,
+      "same_owners": 16,
+      "metrics": [
+        {
+          "prior": 0.5,
+          "usable_bootstrap_replicates": 1000,
+          "metrics": {
+            "roc_auc": {
+              "baseline": 0.6801230296039985,
+              "candidate": 0.675124951941561,
+              "candidate_gain": -0.004998077662437539,
+              "paired_gain_interval_95": [
+                -0.01786207304617736,
+                0.007503364190038036
+              ]
+            },
+            "brier": {
+              "baseline": 0.23351270983016745,
+              "candidate": 0.23512139917485242,
+              "candidate_gain": -0.0016086893446849715,
+              "paired_gain_interval_95": [
+                -0.005893855254164813,
+                0.0023343679831690136
+              ]
+            },
+            "log_loss": {
+              "baseline": 0.6580278858739846,
+              "candidate": 0.6617105162241185,
+              "candidate_gain": -0.003682630350133831,
+              "paired_gain_interval_95": [
+                -0.014936673124318423,
+                0.0063653916148437035
+              ]
+            }
+          },
+          "always_prior": {
+            "roc_auc": 0.5,
+            "brier": 0.25,
+            "log_loss": 0.6931471805599453
+          }
+        },
+        {
+          "prior": 0.1,
+          "usable_bootstrap_replicates": 1000,
+          "metrics": {
+            "roc_auc": {
+              "baseline": 0.6801230296039985,
+              "candidate": 0.675124951941561,
+              "candidate_gain": -0.004998077662437539,
+              "paired_gain_interval_95": [
+                -0.01786207304617736,
+                0.007503364190038036
+              ]
+            },
+            "brier": {
+              "baseline": 0.08659147796493578,
+              "candidate": 0.0863764813514791,
+              "candidate_gain": 0.0002149966134566833,
+              "paired_gain_interval_95": [
+                -0.0005764092995391271,
+                0.0008708670278825956
+              ]
+            },
+            "log_loss": {
+              "baseline": 0.3107096184941152,
+              "candidate": 0.3112177283097711,
+              "candidate_gain": -0.0005081098156559105,
+              "paired_gain_interval_95": [
+                -0.004306772251405822,
+                0.002767320147835715
+              ]
+            }
+          },
+          "always_prior": {
+            "roc_auc": 0.5,
+            "brier": 0.09000000000000001,
+            "log_loss": 0.3250829733914482
+          }
+        }
+      ],
+      "frozen_operating_point": {
+        "threshold_log_odds": 0.3990906967843463,
+        "true_positive": 11,
+        "false_positive": 3,
+        "same": 51,
+        "different": 51
+      }
+    },
+    "external_all": {
+      "trials": 462,
+      "same_owners": 42,
+      "metrics": [
+        {
+          "prior": 0.5,
+          "usable_bootstrap_replicates": 1000,
+          "metrics": {
+            "roc_auc": {
+              "baseline": 0.7946065478533011,
+              "candidate": 0.7934446505875077,
+              "candidate_gain": -0.0011618972657934101,
+              "paired_gain_interval_95": [
+                -0.004212512216775888,
+                0.0014130614953396755
+              ]
+            },
+            "brier": {
+              "baseline": 0.18942186834821334,
+              "candidate": 0.18820759434259804,
+              "candidate_gain": 0.0012142740056153012,
+              "paired_gain_interval_95": [
+                -0.0007596770777647018,
+                0.003053971334091961
+              ]
+            },
+            "log_loss": {
+              "baseline": 0.5621243091901621,
+              "candidate": 0.5589122874251986,
+              "candidate_gain": 0.003212021764963491,
+              "paired_gain_interval_95": [
+                -0.0016431334005043846,
+                0.007595327039542768
+              ]
+            }
+          },
+          "always_prior": {
+            "roc_auc": 0.5,
+            "brier": 0.25,
+            "log_loss": 0.6931471805599453
+          }
+        },
+        {
+          "prior": 0.1,
+          "usable_bootstrap_replicates": 1000,
+          "metrics": {
+            "roc_auc": {
+              "baseline": 0.7946065478533011,
+              "candidate": 0.7934446505875077,
+              "candidate_gain": -0.0011618972657934101,
+              "paired_gain_interval_95": [
+                -0.004212512216775888,
+                0.0014130614953396755
+              ]
+            },
+            "brier": {
+              "baseline": 0.07839066335903332,
+              "candidate": 0.07777676386649492,
+              "candidate_gain": 0.0006138994925384,
+              "paired_gain_interval_95": [
+                -0.0006727596630771402,
+                0.0014123955188036965
+              ]
+            },
+            "log_loss": {
+              "baseline": 0.2737330019433922,
+              "candidate": 0.2720197386941543,
+              "candidate_gain": 0.001713263249237873,
+              "paired_gain_interval_95": [
+                -0.0013998821990630697,
+                0.0038913297321953796
+              ]
+            }
+          },
+          "always_prior": {
+            "roc_auc": 0.5,
+            "brier": 0.09000000000000001,
+            "log_loss": 0.3250829733914482
+          }
+        }
+      ],
+      "frozen_operating_point": {
+        "threshold_log_odds": 0.3990906967843463,
+        "true_positive": 122,
+        "false_positive": 27,
+        "same": 231,
+        "different": 231
+      }
+    }
+  }
+}
